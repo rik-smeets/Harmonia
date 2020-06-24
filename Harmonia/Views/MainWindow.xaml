@@ -1,0 +1,84 @@
+﻿<Controls:MetroWindow x:Class="Harmonia.Views.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls"
+        xmlns:resx="clr-namespace:Harmonia.Properties"
+        mc:Ignorable="d"
+        xmlns:Dialog="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
+        Dialog:DialogParticipation.Register="{Binding}"
+        Title="{Binding Source={x:Static resx:MainResources.Window_Title}}"
+        Width="750"
+        MaxHeight="1000"
+        MaxWidth="1000"
+        SizeToContent="WidthAndHeight"
+        ResizeMode="CanMinimize">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Column="0" TextWrapping="WrapWithOverflow" Margin="10,10" Text="{x:Static resx:MainResources.Harmonia_Description}" />
+            <StackPanel Grid.Column="1" Orientation="Horizontal">
+                <Button Name="btnOpenSettings" Content="{x:Static resx:MainResources.btnSettings}" Click="btnOpenSettings_Click" Margin="10,5" Height="50" Width="100" />
+                <Button Name="btnStartAll" Content="{x:Static resx:MainResources.btnStartAll}" Click="BtnStartAll_Click"  Margin="10,5" Height="50" Width="100" />
+            </StackPanel>
+        </Grid>
+
+        <DataGrid
+            Grid.Row="1"
+            Name="dgDownloadItems"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Top"
+            HorizontalContentAlignment="Stretch"
+            AutoGenerateColumns="false"
+            CanUserAddRows="false"
+            SelectionMode="Single"
+            SelectionUnit="Cell"
+            MinWidth="750"
+            Height="500"
+            Margin="10,0"
+            ItemsSource="{Binding DownloadItems}">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="{x:Static resx:MainResources.Status}" Binding="{Binding Status}" IsReadOnly="true" Width="Auto" />
+                <DataGridTemplateColumn Header="{x:Static resx:MainResources.Progress}" IsReadOnly="true" Width="100">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <ProgressBar Minimum="0" Maximum="100" Value="{Binding Completion}">
+                                <ProgressBar.Style>
+                                    <Style TargetType="ProgressBar" BasedOn="{StaticResource MahApps.Styles.ProgressBar}">
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding IsFailed}" Value="True">
+                                                <Setter Property="Foreground" Value="Red" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </ProgressBar.Style>
+                            </ProgressBar>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTextColumn Header="{x:Static resx:MainResources.Artist}" Binding="{Binding Artist, Mode=TwoWay}" Width="*" />
+                <DataGridTextColumn Header="{x:Static resx:MainResources.Title}" Binding="{Binding Title, Mode=TwoWay}" Width="*" />
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <Grid Grid.Row="2" Margin="0,5">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <Button Grid.Column="0" Name="btnOpenAboutWindow" Click="btnOpenAboutWindow_Click" Content="{x:Static resx:MainResources.btnOpenAboutWindow}" Margin="10,5" />
+            <Button Grid.Column="2" Name="btnOpenOutputDirectory" Click="btnOpenOutputDirectory_Click" Content="{x:Static resx:MainResources.btnOpenOutputDirectory}" Margin="10,5" Height="50" />
+        </Grid>
+    </Grid>
+</Controls:MetroWindow>
