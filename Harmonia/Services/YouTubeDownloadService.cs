@@ -3,6 +3,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Harmonia.Services.Interfaces;
+using Harmonia.Settings.Interfaces;
 using YoutubeExplode;
 using YoutubeExplode.Videos;
 using YoutubeExplode.Videos.Streams;
@@ -12,6 +13,16 @@ namespace Harmonia.Services
     public class YouTubeDownloadService : IYouTubeDownloadService
     {
         private readonly YoutubeClient _youTubeClient = new YoutubeClient();
+        private readonly ISettingsProvider _settingsProvider;
+
+        private static readonly Regex IllegalFileNameRegex =
+            new Regex($"[{Regex.Escape(new string(Path.GetInvalidFileNameChars()) + new string(Path.GetInvalidPathChars()))}]");
+
+        public YouTubeDownloadService(ISettingsProvider settingsProvider)
+        {
+            _youTubeClient = new YoutubeClient();
+            _settingsProvider = settingsProvider;
+        }
 
         public async Task<Video> GetVideo(string youTubeId) =>
             await _youTubeClient.Videos.GetAsync(youTubeId);
@@ -25,20 +36,17 @@ namespace Harmonia.Services
                 .Where(s => s.Container == Container.Mp4)
                 .WithHighestBitrate();
 
-            string fileExtension = streamInfo.Container.Name;
-            string fileName = RemoveIllegalFileNameCharacters($"{requestedFileName}.{fileExtension}");
-            var mp4Path = Path.Combine(Properties.Settings.Default.OutputPath, fileName);
+            var fileExtension = streamInfo.Container.Name;
+            var fileName = $"{requestedFileName}.{fileExtension}";
+
+            var formattedFileName = IllegalFileNameRegex.Replace(fileName, string.Empty);
+
+            var outputDirectory = _settingsProvider.OutputDirectory;
+            var mp4Path = Path.Combine(outputDirectory, formattedFileName);
 
             await _youTubeClient.Videos.Streams.DownloadAsync(streamInfo, mp4Path);
 
             return mp4Path;
-        }
-
-        private static string RemoveIllegalFileNameCharacters(string path)
-        {
-            string regexSearch = new string(Path.GetInvalidFileNameChars()) + new string(Path.GetInvalidPathChars());
-            var r = new Regex(string.Format("[{0}]", Regex.Escape(regexSearch)));
-            return r.Replace(path, "");
         }
     }
 }
