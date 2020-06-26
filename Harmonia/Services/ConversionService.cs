@@ -1,5 +1,4 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
 using System.Threading.Tasks;
 using Harmonia.Services.Interfaces;
 using Xabe.FFmpeg;
@@ -19,12 +18,11 @@ namespace Harmonia.Services
             await FFmpegDownloader.GetLatestVersion(FFmpegVersion.Official);
 
             var mp3Path = mp4Path.Replace(".mp4", ".mp3");
-            var conversion = await FFmpeg.Conversions.FromSnippet.Convert(mp4Path, mp3Path);
-            conversion.SetOutputFormat(Format.mp3);
-            conversion.SetOverwriteOutput(true);
-            conversion.AddParameter("-qscale:a 0");
-
-            await conversion.Start();
+            await (await FFmpeg.Conversions.FromSnippet.Convert(mp4Path, mp3Path))
+                .SetOutputFormat(Format.mp3)
+                .SetOverwriteOutput(true)
+                .AddParameter("-qscale:a 0")
+                .Start();
 
             File.Delete(mp4Path);
 
