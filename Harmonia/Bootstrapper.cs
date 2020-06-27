@@ -5,6 +5,7 @@ using Harmonia.Settings.Interfaces;
 using Harmonia.Wrappers;
 using Harmonia.Wrappers.Interfaces;
 using MahApps.Metro.Controls.Dialogs;
+using Notifications.Wpf;
 using Unity;
 
 namespace Harmonia
@@ -29,8 +30,7 @@ namespace Harmonia
             .RegisterType<IYouTubeDownloadService, YouTubeDownloadService>()
             .RegisterType<IConversionService, ConversionService>()
             .RegisterType<IMp3TagService, Mp3TagService>()
-            .RegisterType<IAudioNormalizerService, AudioNormalizerService>()
-            .RegisterType<IToastService, ToastService>();
+            .RegisterType<IAudioNormalizerService, AudioNormalizerService>();
 
         private static void RegisterSettings(IUnityContainer container)
             => container
@@ -44,11 +44,11 @@ namespace Harmonia
             .RegisterType<IProcessWrapper, ProcessWrapper>()
             .RegisterType<IClipboardWrapper, ClipboardWrapper>()
             .RegisterType<IYouTubeDownloadService, YouTubeDownloadService>()
-            .RegisterType<IApiInformationWrapper, ApiInformationWrapper>()
             .RegisterType<IThemeManagerWrapper, ThemeManagerWrapper>();
 
         private static void RegisterExternalDependencies(IUnityContainer container)
             => container
-            .RegisterType<IDialogCoordinator, DialogCoordinator>();
+            .RegisterType<IDialogCoordinator, DialogCoordinator>()
+            .RegisterType<INotificationManager, NotificationManager>();
     }
 }

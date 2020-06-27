@@ -125,6 +125,9 @@ If this error persists, it might be necessary to update the application.</value>
   <data name="ErrorOccurredTitle" xml:space="preserve">
     <value>Error occurred</value>
   </data>
+  <data name="Harmonia" xml:space="preserve">
+    <value>Harmonia</value>
+  </data>
   <data name="No" xml:space="preserve">
     <value>No</value>
   </data>

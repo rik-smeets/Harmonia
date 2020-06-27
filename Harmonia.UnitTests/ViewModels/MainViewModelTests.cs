@@ -4,10 +4,10 @@ using Harmonia.Models;
 using Harmonia.Properties;
 using Harmonia.Services.Interfaces;
 using Harmonia.ViewModels;
-using Harmonia.Wrappers.Interfaces;
 using MahApps.Metro.Controls.Dialogs;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
+using Notifications.Wpf;
 using Shouldly;
 using YoutubeExplode.Exceptions;
 using YoutubeExplode.Videos;
@@ -23,8 +23,7 @@ namespace Harmonia.UnitTests.ViewModels
         private Mock<IConversionService> _conversionServiceMock;
         private Mock<IMp3TagService> _mp3TagServiceMock;
         private Mock<IAudioNormalizerService> _audioNormalizerServiceMock;
-        private Mock<IToastService> _toastServiceMock;
-        private Mock<IApiInformationWrapper> _apiInformationWrapperMock;
+        private Mock<INotificationManager> _notificationManagerMock;
         private MainViewModel _mainViewModel;
         private const string ValidVideoId = "dQw4w9WgXcQ";
         private const string ValidYouTubeUrl = "youtube.com/watch?v=" + ValidVideoId;
@@ -39,8 +38,7 @@ namespace Harmonia.UnitTests.ViewModels
             _conversionServiceMock = _mockRepository.Create<IConversionService>();
             _mp3TagServiceMock = _mockRepository.Create<IMp3TagService>();
             _audioNormalizerServiceMock = _mockRepository.Create<IAudioNormalizerService>();
-            _toastServiceMock = _mockRepository.Create<IToastService>();
-            _apiInformationWrapperMock = _mockRepository.Create<IApiInformationWrapper>();
+            _notificationManagerMock = _mockRepository.Create<INotificationManager>();
 
             _mainViewModel = new MainViewModel(
                 _youTubeDownloadServiceMock.Object,
@@ -48,8 +46,7 @@ namespace Harmonia.UnitTests.ViewModels
                 _conversionServiceMock.Object,
                 _mp3TagServiceMock.Object,
                 _audioNormalizerServiceMock.Object,
-                _toastServiceMock.Object,
-                _apiInformationWrapperMock.Object);
+                _notificationManagerMock.Object);
         }
 
         [TestCleanup]
@@ -152,11 +149,8 @@ namespace Harmonia.UnitTests.ViewModels
             _mainViewModel.DownloadItems.ShouldHaveSingleItem();
         }
 
-        [DataTestMethod]
-        [DataRow(true)]
-        [DataRow(false)]
-        public async Task AddDownloadItem_WhenGettingVideoInfoFails_ThenThrowsExceptionSetsDownloadItemToFailedAndShowsDialogAndIfAvailableToast(
-            bool isToastNotificationManagerAvailable)
+        [TestMethod]
+        public async Task AddDownloadItem_WhenGettingVideoInfoFails_ThenThrowsExceptionSetsDownloadItemToFailedAndShowsDialogAndToast()
         {
             var expectedMessage = "Some error";
 
@@ -165,13 +159,7 @@ namespace Harmonia.UnitTests.ViewModels
                 .Throws(new VideoUnavailableException(expectedMessage));
 
             SetupErrorDialogMock(expectedMessage);
-
-            _apiInformationWrapperMock.Setup(m => m.IsToastNotificationManagerAvailable)
-                .Returns(isToastNotificationManagerAvailable);
-            if (isToastNotificationManagerAvailable)
-            {
-                _toastServiceMock.Setup(m => m.ShowToast(MainResources.VideoMetaDataToast_Error));
-            }
+            SetupNotificationManagerMock(MainResources.VideoMetaDataToast_Error, NotificationType.Error);
 
             await _mainViewModel.AddDownloadItem(ValidYouTubeUrl);
 
@@ -180,11 +168,8 @@ namespace Harmonia.UnitTests.ViewModels
             ValidateFailedDownload(downloadItem);
         }
 
-        [DataTestMethod]
-        [DataRow(true)]
-        [DataRow(false)]
-        public async Task StartDownloads_WhenCalled_ThenPerformsAllConversionStepsFinishesDownloadItemAndIfAvailableShowsToast(
-            bool isToastNotificationManagerAvailable)
+        [TestMethod]
+        public async Task StartDownloads_WhenCalled_ThenPerformsAllConversionStepsFinishesDownloadItemAndShowsToast()
         {
             var downloadItem = new DownloadItem(ValidVideoId);
             _mainViewModel.DownloadItems.Add(downloadItem);
@@ -210,15 +195,7 @@ namespace Harmonia.UnitTests.ViewModels
             _mp3TagServiceMock
                 .Setup(m => m.SetMp3Tags(mp3Path, downloadItem.Artist, downloadItem.Title));
 
-            _apiInformationWrapperMock
-                .Setup(m => m.IsToastNotificationManagerAvailable)
-                .Returns(isToastNotificationManagerAvailable);
-
-            if (isToastNotificationManagerAvailable)
-            {
-                _toastServiceMock
-                    .Setup(m => m.ShowToast(MainResources.DownloadCompleteToast_Success));
-            }
+            SetupNotificationManagerMock(MainResources.DownloadCompleteToast_Success, NotificationType.Success);
 
             await _mainViewModel.StartDownloads();
 
@@ -254,10 +231,8 @@ namespace Harmonia.UnitTests.ViewModels
             await _mainViewModel.StartDownloads();
         }
 
-        [DataTestMethod]
-        [DataRow(true)]
-        [DataRow(false)]
-        public async Task StartDownloads_WhenCalledButDownloadFails_ThenShowsDialogAndIfAvailableToast(bool isToastNotificationManagerAvailable)
+        [TestMethod]
+        public async Task StartDownloads_WhenCalledButDownloadFails_ThenShowsDialogAndToast()
         {
             var expectedMessage = "Some error";
 
@@ -268,14 +243,7 @@ namespace Harmonia.UnitTests.ViewModels
                 .Setup(m => m.GetVideo(downloadItem.YouTubeId))
                 .Throws(new VideoUnavailableException(expectedMessage));
 
-            _apiInformationWrapperMock
-                .Setup(m => m.IsToastNotificationManagerAvailable)
-                .Returns(isToastNotificationManagerAvailable);
-            if (isToastNotificationManagerAvailable)
-            {
-                _toastServiceMock
-                    .Setup(m => m.ShowToast(MainResources.DownloadCompleteToast_Error));
-            }
+            SetupNotificationManagerMock(MainResources.DownloadCompleteToast_Error, NotificationType.Error);
 
             SetupErrorDialogMock(expectedMessage);
 
@@ -294,6 +262,20 @@ namespace Harmonia.UnitTests.ViewModels
                      MessageDialogStyle.Affirmative,
                      null))
                  .ReturnsAsync(MessageDialogResult.Affirmative);
+        }
+
+        private void SetupNotificationManagerMock(string expectedMessage, NotificationType notificationType)
+        {
+            _notificationManagerMock
+               .Setup(m => m.Show(
+                   It.Is<NotificationContent>(
+                       n => n.Title == CommonResources.Harmonia &&
+                       n.Message == expectedMessage &&
+                       n.Type == notificationType),
+                   string.Empty,
+                   TimeSpan.FromSeconds(10),
+                   default,
+                   default));
         }
 
         private void ValidateFailedDownload(DownloadItem downloadItem)

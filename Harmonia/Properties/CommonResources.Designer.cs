@@ -81,6 +81,15 @@ namespace Harmonia.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Harmonia.
+        /// </summary>
+        public static string Harmonia {
+            get {
+                return ResourceManager.GetString("Harmonia", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to No.
         /// </summary>
         public static string No {

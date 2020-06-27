@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 using Harmonia.Models;
 using Harmonia.Properties;
 using Harmonia.Services.Interfaces;
-using Harmonia.Wrappers.Interfaces;
 using MahApps.Metro.Controls.Dialogs;
+using Notifications.Wpf;
 
 namespace Harmonia.ViewModels
 {
@@ -23,8 +23,7 @@ namespace Harmonia.ViewModels
         private readonly IConversionService _conversionService;
         private readonly IMp3TagService _mp3TagService;
         private readonly IAudioNormalizerService _audioNormalizerService;
-        private readonly IToastService _toastService;
-        private readonly IApiInformationWrapper _apiInformationWrapper;
+        private readonly INotificationManager _notificationManager;
 
         public MainViewModel(
             IYouTubeDownloadService youTubeDownloadService,
@@ -32,16 +31,14 @@ namespace Harmonia.ViewModels
             IConversionService conversionService,
             IMp3TagService mp3TagService,
             IAudioNormalizerService audioNormalizerService,
-            IToastService toastService,
-            IApiInformationWrapper apiInformationWrapper)
+            INotificationManager notificationManager)
         {
             _youTubeDownloadService = youTubeDownloadService;
             _dialogCoordinator = dialogCoordinator;
             _conversionService = conversionService;
             _mp3TagService = mp3TagService;
             _audioNormalizerService = audioNormalizerService;
-            _toastService = toastService;
-            _apiInformationWrapper = apiInformationWrapper;
+            _notificationManager = notificationManager;
         }
 
         public async Task AddDownloadItem(string clipboardText)
@@ -77,7 +74,7 @@ namespace Harmonia.ViewModels
             {
                 downloadItem.SetFailed();
 
-                ShowToastIfAvailable(MainResources.VideoMetaDataToast_Error);
+                ShowToast(MainResources.VideoMetaDataToast_Error, NotificationType.Error);
 
                 await ShowDialog(ex);
             }
@@ -100,11 +97,11 @@ namespace Harmonia.ViewModels
                     await HandleDownload(downloadItem);
                 }));
 
-                ShowToastIfAvailable(MainResources.DownloadCompleteToast_Success);
+                ShowToast(MainResources.DownloadCompleteToast_Success, NotificationType.Success);
             }
             catch (Exception ex)
             {
-                ShowToastIfAvailable(MainResources.DownloadCompleteToast_Error);
+                ShowToast(MainResources.DownloadCompleteToast_Error, NotificationType.Error);
 
                 await ShowDialog(ex);
             }
@@ -159,12 +156,15 @@ namespace Harmonia.ViewModels
                 message: string.Format(CommonResources.ErrorOccurredMessage, ex.Message));
         }
 
-        private void ShowToastIfAvailable(string message)
+        private void ShowToast(string message, NotificationType notificationType)
         {
-            if (_apiInformationWrapper.IsToastNotificationManagerAvailable)
-            {
-                _toastService.ShowToast(message);
-            }
+            _notificationManager.Show(
+                new NotificationContent
+                {
+                    Title = CommonResources.Harmonia,
+                    Message = message,
+                    Type = notificationType
+                }, expirationTime: TimeSpan.FromSeconds(10));
         }
     }
 }
