@@ -182,5 +182,31 @@ namespace Harmonia.UnitTests.ViewModels
 
             result.ShouldBe(ThemeResources.Olive);
         }
+
+        [TestMethod]
+        public void UpgradeIfRequired_WhenCalledAndUpgradeRequiredIsTrue_ThenPerformsUpdate()
+        {
+            _settingsRetrieverMock
+                .Setup(m => m.IsUpgradeRequired)
+                .Returns(true);
+
+            _settingsRetrieverMock
+                .SetupSet(m => m.IsUpgradeRequired = false);
+
+            _settingsRetrieverMock
+                .Setup(m => m.PerformUpgrade());
+
+            _settingsProvider.UpgradeIfRequired();
+        }
+
+        [TestMethod]
+        public void UpgradeIfRequired_WhenCalledAndUpgradeRequiredIsFalse_ThenDoesNotPerformUpdate()
+        {
+            _settingsRetrieverMock
+                .Setup(m => m.IsUpgradeRequired)
+                .Returns(false);
+
+            _settingsProvider.UpgradeIfRequired();
+        }
     }
 }

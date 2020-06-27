@@ -6,5 +6,8 @@
         string Mp3GainPath { get; set; }
         string ThemeBaseColor { get; set; }
         string ThemeColorScheme { get; set; }
+        bool IsUpgradeRequired { get; set; }
+
+        void PerformUpgrade();
     }
 }

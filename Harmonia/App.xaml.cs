@@ -15,6 +15,8 @@ namespace Harmonia
             var container = Bootstrapper.Register(new UnityContainer());
 
             var settingsProvider = container.Resolve<ISettingsProvider>();
+            settingsProvider.UpgradeIfRequired();
+
             var themeManagerWrapper = container.Resolve<IThemeManagerWrapper>();
             themeManagerWrapper.ChangeThemeBaseColor(settingsProvider.ThemeBaseColor);
             themeManagerWrapper.ChangeThemeColorScheme(settingsProvider.ThemeColorScheme);

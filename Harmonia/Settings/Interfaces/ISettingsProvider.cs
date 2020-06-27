@@ -10,5 +10,6 @@
         bool IsMp3GainPathValid();
 
         bool IsOutputDirectoryValid();
+        void UpgradeIfRequired();
     }
 }

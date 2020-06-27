@@ -43,5 +43,17 @@ namespace Harmonia.Settings
                 Properties.Settings.Default.Save();
             }
         }
+
+        public bool IsUpgradeRequired
+        {
+            get => Properties.Settings.Default.IsUpgradeRequired;
+            set
+            {
+                Properties.Settings.Default.IsUpgradeRequired = value;
+                Properties.Settings.Default.Save();
+            }
+        }
+
+        public void PerformUpgrade() => Properties.Settings.Default.Upgrade();
     }
 }

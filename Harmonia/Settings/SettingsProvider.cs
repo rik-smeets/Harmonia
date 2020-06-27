@@ -53,5 +53,14 @@ namespace Harmonia.Settings
         public bool IsOutputDirectoryValid() => _storageWrapper.DirectoryExists(OutputDirectory);
 
         public bool IsMp3GainPathValid() => _storageWrapper.FileExists(Mp3GainPath);
+
+        public void UpgradeIfRequired()
+        {
+            if (_settingsRetriever.IsUpgradeRequired)
+            {
+                _settingsRetriever.PerformUpgrade();
+                _settingsRetriever.IsUpgradeRequired = false;
+            }
+        }
     }
 }

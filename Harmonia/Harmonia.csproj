@@ -6,7 +6,7 @@
     <AssemblyTitle>Harmonia</AssemblyTitle>
     <Product>Harmonia</Product>
     <ExtrasEnableWpfProjectSetup>true</ExtrasEnableWpfProjectSetup>
-    <Version>1.0.0</Version>
+    <Version>0.9.1</Version>
   </PropertyGroup>
   <PropertyGroup>
     <ApplicationIcon>.\Assets\harmonia.ico</ApplicationIcon>
