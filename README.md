@@ -4,7 +4,7 @@ Harmonia is a Windows desktop application, providing a user friendly way to extr
 ## Features
 - User friendly interface
 - Portable desktop application (i.e. no installation necessary)
-- Listens to your clipboard, no manual adding of YouTube URL's necessary
+- Listens to your clipboard, no manual adding of YouTube URLs necessary
 - Supports all YouTube videos
 - Normalizes audio, so the volume is the same across all downloads
 - Sets the file name and MP3 tags consistently
@@ -27,7 +27,7 @@ If MP3Gain is not installed/the executable cannot be located, audio normalizatio
 2. Harmonia is now monitoring your clipboard. Simply copy a valid YouTube URL (Ctrl + C).
 3. The video will show up in the grid. Artist and title will be suggested. You can change these if you like.
 4. Repeat for multiple videos if desired.
-5. Start downloading and convertering by selecting *Start all*. 
+5. Start downloading and converting by selecting *Start all*. 
 6. Once downloads are activated, you can keep adding new YouTube videos. At any time, hit *Start all* again to also start downloading the new videos. Completed and running downloads will be ignored.
 
 ### Settings
