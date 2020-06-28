@@ -241,6 +241,51 @@ namespace Harmonia.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to An error occurred when Harmonia was updating.
+        /// </summary>
+        public static string Update_Error {
+            get {
+                return ResourceManager.GetString("Update_Error", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to An update for Harmonia is available. Upgrading is strongly recommended, since older versions might not work properly anymore. It won&apos;t take long. Would you like to download and install the update?.
+        /// </summary>
+        public static string UpdateAvailable_Message {
+            get {
+                return ResourceManager.GetString("UpdateAvailable_Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Update available.
+        /// </summary>
+        public static string UpdateAvailable_Title {
+            get {
+                return ResourceManager.GetString("UpdateAvailable_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Harmonia is currently updating. It will close and relaunch automatically. .
+        /// </summary>
+        public static string Updating_Message {
+            get {
+                return ResourceManager.GetString("Updating_Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Updating....
+        /// </summary>
+        public static string Updating_Title {
+            get {
+                return ResourceManager.GetString("Updating_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Error occurred whilst getting video metadata.
         /// </summary>
         public static string VideoMetaDataToast_Error {

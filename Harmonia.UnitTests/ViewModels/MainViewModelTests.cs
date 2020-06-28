@@ -24,6 +24,7 @@ namespace Harmonia.UnitTests.ViewModels
         private Mock<IMp3TagService> _mp3TagServiceMock;
         private Mock<IAudioNormalizerService> _audioNormalizerServiceMock;
         private Mock<INotificationManager> _notificationManagerMock;
+        private Mock<IAutoUpdateService> _autoUpdateServiceMock;
         private MainViewModel _mainViewModel;
         private const string ValidVideoId = "dQw4w9WgXcQ";
         private const string ValidYouTubeUrl = "youtube.com/watch?v=" + ValidVideoId;
@@ -39,6 +40,7 @@ namespace Harmonia.UnitTests.ViewModels
             _mp3TagServiceMock = _mockRepository.Create<IMp3TagService>();
             _audioNormalizerServiceMock = _mockRepository.Create<IAudioNormalizerService>();
             _notificationManagerMock = _mockRepository.Create<INotificationManager>();
+            _autoUpdateServiceMock = _mockRepository.Create<IAutoUpdateService>();
 
             _mainViewModel = new MainViewModel(
                 _youTubeDownloadServiceMock.Object,
@@ -46,7 +48,8 @@ namespace Harmonia.UnitTests.ViewModels
                 _conversionServiceMock.Object,
                 _mp3TagServiceMock.Object,
                 _audioNormalizerServiceMock.Object,
-                _notificationManagerMock.Object);
+                _notificationManagerMock.Object,
+                _autoUpdateServiceMock.Object);
         }
 
         [TestCleanup]
@@ -250,6 +253,90 @@ namespace Harmonia.UnitTests.ViewModels
             await _mainViewModel.StartDownloads();
 
             ValidateFailedDownload(downloadItem);
+        }
+
+        [TestMethod]
+        public async Task PerformUpdateAsync_WhenCalledButNoUpdateAvailable_ThenDoesNothing()
+        {
+            _autoUpdateServiceMock
+                .Setup(m => m.CanPerformUpdateAsync())
+                .ReturnsAsync(false);
+
+            await _mainViewModel.PerformUpdateAsync();
+        }
+
+        [DataTestMethod]
+        [DataRow(MessageDialogResult.Canceled)]
+        [DataRow(MessageDialogResult.FirstAuxiliary)]
+        [DataRow(MessageDialogResult.Negative)]
+        [DataRow(MessageDialogResult.SecondAuxiliary)]
+        public async Task PerformUpdateAsync_WhenCalledWithUpdateAvailableButUserCancels_ThenDoesNothing(
+            MessageDialogResult messageDialogResult)
+        {
+            _autoUpdateServiceMock
+                .Setup(m => m.CanPerformUpdateAsync())
+                .ReturnsAsync(true);
+            SetupUpdateAvailableDialog(messageDialogResult);
+
+            await _mainViewModel.PerformUpdateAsync();
+        }
+
+        [TestMethod]
+        public async Task PerformUpdateAsync_WhenCalledWithUpdateAvailableAndUserConfirms_ThenPerformsUpdate()
+        {
+            _autoUpdateServiceMock
+                .Setup(m => m.CanPerformUpdateAsync())
+                .ReturnsAsync(true);
+
+            SetupUpdateAvailableDialog(MessageDialogResult.Affirmative);
+
+            var progressDialogController = default(ProgressDialogController);
+
+            _dialogCoordinatorMock
+                .Setup(d => d.ShowProgressAsync(
+                    _mainViewModel,
+                    MainResources.Updating_Title,
+                    MainResources.Updating_Message,
+                    false,
+                    It.Is<MetroDialogSettings>(
+                        mds => mds.AnimateShow == false && mds.AnimateHide == false)))
+                .ReturnsAsync(progressDialogController);
+
+            _autoUpdateServiceMock
+                .Setup(m => m.PerformUpdateAsync(progressDialogController))
+                .Returns(Task.CompletedTask);
+
+            await _mainViewModel.PerformUpdateAsync();
+        }
+
+        [TestMethod]
+        public async Task PerformUpdateAsync_WhenCalledButExceptionsOccurs_ThenToastAndDialogAreShown()
+        {
+            var expectedMessage = "Some error";
+
+            _autoUpdateServiceMock
+                .Setup(m => m.CanPerformUpdateAsync())
+                .Throws(new Exception(expectedMessage));
+
+            SetupErrorDialogMock(expectedMessage);
+            SetupNotificationManagerMock(MainResources.Update_Error, NotificationType.Error);
+
+            await _mainViewModel.PerformUpdateAsync();
+        }
+
+        private void SetupUpdateAvailableDialog(MessageDialogResult messageDialogResult)
+        {
+            _dialogCoordinatorMock
+                .Setup(d => d.ShowMessageAsync(
+                    _mainViewModel,
+                    MainResources.UpdateAvailable_Title,
+                    MainResources.UpdateAvailable_Message,
+                    MessageDialogStyle.AffirmativeAndNegative,
+                    It.Is<MetroDialogSettings>(
+                        mds => mds.DefaultButtonFocus == MessageDialogResult.Affirmative &&
+                        mds.AnimateHide == false)
+                    ))
+                .ReturnsAsync(messageDialogResult);
         }
 
         private void SetupErrorDialogMock(string expectedMessage)

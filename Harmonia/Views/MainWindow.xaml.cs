@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Diagnostics;
 using System.Threading.Tasks;
 using System.Windows;
 using Harmonia.Properties;
@@ -28,10 +29,16 @@ namespace Harmonia.Views
             _settingsProvider = settingsProvider;
             _unityContainer = unityContainer;
             _viewModel = mainViewModel;
-
             DataContext = mainViewModel;
 
             clipboardWrapper.ClipboardTextChanged += ClipboardWrapper_ClipboardTextChanged;
+        }
+
+        protected override async void OnContentRendered(EventArgs e)
+        {
+            base.OnContentRendered(e);
+
+            await _viewModel.PerformUpdateAsync();
         }
 
         private async void ClipboardWrapper_ClipboardTextChanged(object sender, string clipboardText)

@@ -6,6 +6,8 @@ using Harmonia.Wrappers;
 using Harmonia.Wrappers.Interfaces;
 using MahApps.Metro.Controls.Dialogs;
 using Notifications.Wpf;
+using Onova;
+using Onova.Services;
 using Unity;
 
 namespace Harmonia
@@ -30,7 +32,8 @@ namespace Harmonia
             .RegisterType<IYouTubeDownloadService, YouTubeDownloadService>()
             .RegisterType<IConversionService, ConversionService>()
             .RegisterType<IMp3TagService, Mp3TagService>()
-            .RegisterType<IAudioNormalizerService, AudioNormalizerService>();
+            .RegisterType<IAudioNormalizerService, AudioNormalizerService>()
+            .RegisterType<IAutoUpdateService, AutoUpdateService>();
 
         private static void RegisterSettings(IUnityContainer container)
             => container
@@ -49,6 +52,14 @@ namespace Harmonia
         private static void RegisterExternalDependencies(IUnityContainer container)
             => container
             .RegisterType<IDialogCoordinator, DialogCoordinator>()
-            .RegisterType<INotificationManager, NotificationManager>();
+            .RegisterType<INotificationManager, NotificationManager>()
+            .RegisterInstance<IUpdateManager>(CreateUpdateManager());
+
+        private static UpdateManager CreateUpdateManager()
+        {
+            return new UpdateManager(
+                new GithubPackageResolver("rik-smeets", "Harmonia", "*.zip"),
+                new ZipPackageExtractor());
+        }
     }
 }

@@ -24,6 +24,7 @@ namespace Harmonia.ViewModels
         private readonly IMp3TagService _mp3TagService;
         private readonly IAudioNormalizerService _audioNormalizerService;
         private readonly INotificationManager _notificationManager;
+        private readonly IAutoUpdateService _autoUpdateService;
 
         public MainViewModel(
             IYouTubeDownloadService youTubeDownloadService,
@@ -31,7 +32,8 @@ namespace Harmonia.ViewModels
             IConversionService conversionService,
             IMp3TagService mp3TagService,
             IAudioNormalizerService audioNormalizerService,
-            INotificationManager notificationManager)
+            INotificationManager notificationManager,
+            IAutoUpdateService autoUpdateService)
         {
             _youTubeDownloadService = youTubeDownloadService;
             _dialogCoordinator = dialogCoordinator;
@@ -39,6 +41,7 @@ namespace Harmonia.ViewModels
             _mp3TagService = mp3TagService;
             _audioNormalizerService = audioNormalizerService;
             _notificationManager = notificationManager;
+            _autoUpdateService = autoUpdateService;
         }
 
         public async Task AddDownloadItem(string clipboardText)
@@ -76,7 +79,7 @@ namespace Harmonia.ViewModels
 
                 ShowToast(MainResources.VideoMetaDataToast_Error, NotificationType.Error);
 
-                await ShowDialog(ex);
+                await ShowErrorDialog(ex);
             }
         }
 
@@ -103,7 +106,51 @@ namespace Harmonia.ViewModels
             {
                 ShowToast(MainResources.DownloadCompleteToast_Error, NotificationType.Error);
 
-                await ShowDialog(ex);
+                await ShowErrorDialog(ex);
+            }
+        }
+
+        public async Task PerformUpdateAsync()
+        {
+            try
+            {
+                if (!await _autoUpdateService.CanPerformUpdateAsync())
+                {
+                    return;
+                }
+
+                var result = await _dialogCoordinator.ShowMessageAsync(
+                    this,
+                    MainResources.UpdateAvailable_Title,
+                    MainResources.UpdateAvailable_Message,
+                    MessageDialogStyle.AffirmativeAndNegative,
+                    new MetroDialogSettings
+                    {
+                        DefaultButtonFocus = MessageDialogResult.Affirmative,
+                        AnimateHide = false
+                    });
+
+                if (result == MessageDialogResult.Affirmative)
+                {
+                    var progressDialog = await _dialogCoordinator.ShowProgressAsync(
+                        this,
+                        MainResources.Updating_Title,
+                        MainResources.Updating_Message,
+                        isCancelable: false,
+                        settings: new MetroDialogSettings
+                        {
+                            AnimateHide = false,
+                            AnimateShow = false
+                        });
+
+                    await _autoUpdateService.PerformUpdateAsync(progressDialog);
+                }
+            }
+            catch (Exception ex)
+            {
+                ShowToast(MainResources.Update_Error, NotificationType.Error);
+
+                await ShowErrorDialog(ex);
             }
         }
 
@@ -148,7 +195,7 @@ namespace Harmonia.ViewModels
             });
         }
 
-        private async Task ShowDialog(Exception ex)
+        private async Task ShowErrorDialog(Exception ex)
         {
             await _dialogCoordinator.ShowMessageAsync(
                 context: this,
