@@ -13,7 +13,7 @@ namespace Harmonia.Views
             InitializeComponent();
 
             var version = Assembly.GetEntryAssembly().GetName().Version;
-            var formattedVersion = $"{version.Major}.{version.Minor}.{version.Revision}";
+            var formattedVersion = $"{version.Major}.{version.Minor}.{version.Build}";
 
             Title = string.Format(AboutResources.Window_Title, formattedVersion);
         }
