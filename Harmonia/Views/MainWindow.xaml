@@ -41,12 +41,16 @@
             HorizontalContentAlignment="Stretch"
             AutoGenerateColumns="false"
             CanUserAddRows="false"
-            SelectionMode="Single"
+            CanUserDeleteRows="True"
+            CanUserReorderColumns="False"
+            CanUserResizeColumns="False"
+            SelectionMode="Extended"
             SelectionUnit="Cell"
             MinWidth="750"
             Height="500"
             Margin="10,0"
-            ItemsSource="{Binding DownloadItems}">
+            ItemsSource="{Binding DownloadItems}"
+            PreviewKeyDown="dgDownloadItems_PreviewKeyDown">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="{x:Static resx:MainResources.Status}" Binding="{Binding Status}" IsReadOnly="true" Width="Auto" />
                 <DataGridTemplateColumn Header="{x:Static resx:MainResources.Progress}" IsReadOnly="true" Width="100">
@@ -68,6 +72,13 @@
                 </DataGridTemplateColumn>
                 <DataGridTextColumn Header="{x:Static resx:MainResources.Artist}" Binding="{Binding Artist, Mode=TwoWay}" Width="*" />
                 <DataGridTextColumn Header="{x:Static resx:MainResources.Title}" Binding="{Binding Title, Mode=TwoWay}" Width="*" />
+                <DataGridTemplateColumn Header="{x:Static resx:MainResources.Delete}" Width="125" CanUserSort="False">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Content="{x:Static resx:MainResources.btnDelete}" Click="btnDelete_Click" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
             </DataGrid.Columns>
         </DataGrid>
 

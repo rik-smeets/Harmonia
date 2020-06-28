@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -14,10 +13,8 @@ namespace Harmonia.ViewModels
 {
     public class MainViewModel
     {
-        public ObservableCollection<DownloadItem> DownloadItems { get; } = new ObservableCollection<DownloadItem>();
-
+        private readonly ObservableCollection<DownloadItem> _downloadItems = new ObservableCollection<DownloadItem>();
         private readonly Regex YouTubeUrlRegex = new Regex(@"youtu(?:\.be|be\.com)/(?:.*v(?:/|=)|(?:.*/)?)([a-zA-Z0-9-_]{11})+");
-        private readonly IList<string> _previousMatches = new List<string>();
         private readonly IYouTubeDownloadService _youTubeDownloadService;
         private readonly IDialogCoordinator _dialogCoordinator;
         private readonly IConversionService _conversionService;
@@ -42,7 +39,13 @@ namespace Harmonia.ViewModels
             _audioNormalizerService = audioNormalizerService;
             _notificationManager = notificationManager;
             _autoUpdateService = autoUpdateService;
+
+            DownloadItems = new ReadOnlyObservableCollection<DownloadItem>(_downloadItems);
         }
+
+        public ReadOnlyObservableCollection<DownloadItem> DownloadItems { get; }
+
+        public void AddDownloadItem(DownloadItem downloadItem) => _downloadItems.Add(downloadItem);
 
         public async Task AddDownloadItem(string clipboardText)
         {
@@ -53,14 +56,13 @@ namespace Harmonia.ViewModels
             }
 
             var youTubeId = youTubeMatch.Groups[1].Value;
-            if (_previousMatches.Contains(youTubeId))
+            if (_downloadItems.Any(di => di.YouTubeId == youTubeId))
             {
                 return;
             }
 
-            _previousMatches.Add(youTubeId);
             var downloadItem = new DownloadItem(youTubeId);
-            DownloadItems.Insert(0, downloadItem);
+            _downloadItems.Insert(0, downloadItem);
 
             try
             {
@@ -109,6 +111,9 @@ namespace Harmonia.ViewModels
                 await ShowErrorDialog(ex);
             }
         }
+
+        public void DeleteDownloadItem(DownloadItem downloadItem)
+            => _downloadItems.Remove(downloadItem);
 
         public async Task PerformUpdateAsync()
         {

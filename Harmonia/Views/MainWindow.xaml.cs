@@ -1,7 +1,11 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Input;
+using Harmonia.Models;
 using Harmonia.Properties;
 using Harmonia.Settings.Interfaces;
 using Harmonia.ViewModels;
@@ -127,6 +131,33 @@ namespace Harmonia.Views
             var window = _unityContainer.Resolve<T>();
             window.Owner = this;
             window.ShowDialog();
+        }
+
+        private void btnDelete_Click(object sender, RoutedEventArgs e)
+        {
+            if (((Button)sender).DataContext is DownloadItem downloadItem)
+            {
+                _viewModel.DeleteDownloadItem(downloadItem);
+            }
+        }
+
+        private void dgDownloadItems_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key != Key.Delete && (!Keyboard.IsKeyDown(Key.LeftCtrl) || !Keyboard.IsKeyDown(Key.RightCtrl)))
+            {
+                return;
+            }
+
+            var dataGrid = (DataGrid)sender;
+            var selectedDownloadItems = dataGrid.SelectedCells
+                .Select(sc => sc.Item)
+                .OfType<DownloadItem>()
+                .ToArray();
+
+            foreach (var downloadItem in selectedDownloadItems)
+            {
+                _viewModel.DeleteDownloadItem(downloadItem);
+            }
         }
     }
 }

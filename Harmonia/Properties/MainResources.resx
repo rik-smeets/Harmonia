@@ -120,6 +120,9 @@
   <data name="Artist" xml:space="preserve">
     <value>Artist</value>
   </data>
+  <data name="btnDelete" xml:space="preserve">
+    <value>Delete (Ctrl + Del)</value>
+  </data>
   <data name="btnOpenAboutWindow" xml:space="preserve">
     <value>About _Harmonia</value>
   </data>
@@ -134,6 +137,9 @@
   </data>
   <data name="Completed" xml:space="preserve">
     <value>Completed</value>
+  </data>
+  <data name="Delete" xml:space="preserve">
+    <value>Delete</value>
   </data>
   <data name="DownloadCompleteToast_Error" xml:space="preserve">
     <value>Error occurred during download</value>

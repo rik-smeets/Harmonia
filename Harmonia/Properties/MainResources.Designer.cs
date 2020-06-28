@@ -70,6 +70,15 @@ namespace Harmonia.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Delete (Ctrl + Del).
+        /// </summary>
+        public static string btnDelete {
+            get {
+                return ResourceManager.GetString("btnDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to About _Harmonia.
         /// </summary>
         public static string btnOpenAboutWindow {
@@ -111,6 +120,15 @@ namespace Harmonia.Properties {
         public static string Completed {
             get {
                 return ResourceManager.GetString("Completed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Delete.
+        /// </summary>
+        public static string Delete {
+            get {
+                return ResourceManager.GetString("Delete", resourceCulture);
             }
         }
         

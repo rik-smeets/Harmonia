@@ -175,7 +175,7 @@ namespace Harmonia.UnitTests.ViewModels
         public async Task StartDownloads_WhenCalled_ThenPerformsAllConversionStepsFinishesDownloadItemAndShowsToast()
         {
             var downloadItem = new DownloadItem(ValidVideoId);
-            _mainViewModel.DownloadItems.Add(downloadItem);
+            _mainViewModel.AddDownloadItem(downloadItem);
 
             var videoInfo = CreateVideo();
             _youTubeDownloadServiceMock
@@ -216,7 +216,7 @@ namespace Harmonia.UnitTests.ViewModels
                 IsRunning = true
             };
 
-            _mainViewModel.DownloadItems.Add(downloadItem);
+            _mainViewModel.AddDownloadItem(downloadItem);
 
             await _mainViewModel.StartDownloads();
         }
@@ -229,7 +229,7 @@ namespace Harmonia.UnitTests.ViewModels
                 IsCompleted = true
             };
 
-            _mainViewModel.DownloadItems.Add(downloadItem);
+            _mainViewModel.AddDownloadItem(downloadItem);
 
             await _mainViewModel.StartDownloads();
         }
@@ -240,7 +240,7 @@ namespace Harmonia.UnitTests.ViewModels
             var expectedMessage = "Some error";
 
             var downloadItem = new DownloadItem(ValidVideoId);
-            _mainViewModel.DownloadItems.Add(downloadItem);
+            _mainViewModel.AddDownloadItem(downloadItem);
 
             _youTubeDownloadServiceMock
                 .Setup(m => m.GetVideo(downloadItem.YouTubeId))
@@ -322,6 +322,18 @@ namespace Harmonia.UnitTests.ViewModels
             SetupNotificationManagerMock(MainResources.Update_Error, NotificationType.Error);
 
             await _mainViewModel.PerformUpdateAsync();
+        }
+
+        [TestMethod]
+        public void DeleteDownloadItem_WhenCalled_ThemRemovesDownloadItem()
+        {
+            var downloadItem = new DownloadItem(ValidVideoId);
+
+            _mainViewModel.AddDownloadItem(downloadItem);
+            _mainViewModel.DownloadItems.ShouldHaveSingleItem();
+
+            _mainViewModel.DeleteDownloadItem(downloadItem);
+            _mainViewModel.DownloadItems.ShouldBeEmpty();
         }
 
         private void SetupUpdateAvailableDialog(MessageDialogResult messageDialogResult)
