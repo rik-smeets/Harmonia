@@ -21,6 +21,7 @@ namespace Harmonia.Views
         private readonly ISettingsProvider _settingsProvider;
         private readonly IUnityContainer _unityContainer;
         private readonly MainViewModel _viewModel;
+        private readonly IClipboardWrapper _clipboardWrapper;
 
         public MainWindow(
             ISettingsProvider settingsProvider,
@@ -33,9 +34,8 @@ namespace Harmonia.Views
             _settingsProvider = settingsProvider;
             _unityContainer = unityContainer;
             _viewModel = mainViewModel;
+            _clipboardWrapper = clipboardWrapper;
             DataContext = mainViewModel;
-
-            clipboardWrapper.ClipboardTextChanged += ClipboardWrapper_ClipboardTextChanged;
         }
 
         protected override async void OnContentRendered(EventArgs e)
@@ -43,6 +43,8 @@ namespace Harmonia.Views
             base.OnContentRendered(e);
 
             await _viewModel.PerformUpdateAsync();
+
+            _clipboardWrapper.ClipboardTextChanged += ClipboardWrapper_ClipboardTextChanged;
         }
 
         private async void ClipboardWrapper_ClipboardTextChanged(object sender, string clipboardText)
