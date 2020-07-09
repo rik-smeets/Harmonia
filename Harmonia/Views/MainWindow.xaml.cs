@@ -42,9 +42,9 @@ namespace Harmonia.Views
         {
             base.OnContentRendered(e);
 
-            await _viewModel.PerformUpdateAsync();
-
             _clipboardWrapper.ClipboardTextChanged += ClipboardWrapper_ClipboardTextChanged;
+
+            await _viewModel.PerformUpdateAsync();
         }
 
         private async void ClipboardWrapper_ClipboardTextChanged(object sender, string clipboardText)
