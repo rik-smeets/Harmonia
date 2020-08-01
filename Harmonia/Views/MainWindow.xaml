@@ -52,7 +52,7 @@
             ItemsSource="{Binding DownloadItems}"
             PreviewKeyDown="dgDownloadItems_PreviewKeyDown">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="{x:Static resx:MainResources.Status}" Binding="{Binding Status}" IsReadOnly="true" Width="Auto" />
+                <DataGridTextColumn Header="{x:Static resx:MainResources.Status}" Binding="{Binding Status}" IsReadOnly="true" Width="75" />
                 <DataGridTemplateColumn Header="{x:Static resx:MainResources.Progress}" IsReadOnly="true" Width="100">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
