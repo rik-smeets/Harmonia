@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
 using System.Windows.Input;
 using Harmonia.Models;
 using Harmonia.Properties;
@@ -145,12 +146,51 @@ namespace Harmonia.Views
 
         private void dgDownloadItems_PreviewKeyDown(object sender, KeyEventArgs e)
         {
-            if (e.Key != Key.Delete && (!Keyboard.IsKeyDown(Key.LeftCtrl) || !Keyboard.IsKeyDown(Key.RightCtrl)))
+            var dataGrid = (DataGrid)sender;
+            BindArtistAndTitleOnTextChange(dataGrid);
+            DeleteItemsOnCtrlDeletePress(e, dataGrid);
+        }
+
+        private void BindArtistAndTitleOnTextChange(DataGrid datagrid)
+        {
+            var selectedCells = datagrid.SelectedCells;
+            if (selectedCells.Count != 1)
             {
                 return;
             }
 
-            var dataGrid = (DataGrid)sender;
+            var selectedCell = selectedCells[0];
+            if (!selectedCell.IsValid ||
+                !(selectedCell.Column is DataGridTextColumn dgTextColumn) ||
+                !(dgTextColumn.Binding is Binding binding))
+            {
+                return;
+            }
+
+            var downloadItem = (DownloadItem)selectedCell.Item;
+            var content = selectedCell.Column.GetCellContent(downloadItem);
+            if (content is TextBox textBox)
+            {
+                switch (binding.Path.Path)
+                {
+                    case nameof(DownloadItem.Artist):
+                        downloadItem.Artist = textBox.Text;
+                        break;
+
+                    case nameof(DownloadItem.Title):
+                        downloadItem.Title = textBox.Text;
+                        break;
+                }
+            }
+        }
+
+        private void DeleteItemsOnCtrlDeletePress(KeyEventArgs e, DataGrid dataGrid)
+        {
+            if (e.Key != Key.Delete || !Keyboard.IsKeyDown(Key.LeftCtrl) && !Keyboard.IsKeyDown(Key.RightCtrl))
+            {
+                return;
+            }
+
             var selectedDownloadItems = dataGrid.SelectedCells
                 .Select(sc => sc.Item)
                 .OfType<DownloadItem>()
