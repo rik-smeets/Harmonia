@@ -6,6 +6,6 @@ namespace Harmonia.Wrappers.Interfaces
     {
         void Start(string fileName);
 
-        void StartWaitForExitWithTimeoutKill(ProcessStartInfo processStartInfo);
+        void StartWaitForExitWithTimeoutKill(ProcessStartInfo processStartInfo, int timeoutSeconds = 60);
     }
 }

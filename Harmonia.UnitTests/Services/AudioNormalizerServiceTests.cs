@@ -76,7 +76,7 @@ namespace Harmonia.UnitTests.Services
                     psi.UseShellExecute == false &&
                     psi.FileName == Mp3GainPath &&
                     psi.Arguments == $"/r /k /c \"{DefaultMp3Path}\""
-                )));
+                ), 600));
 
             _audioNormalizerService.NormalizeAudio(DefaultMp3Path);
         }

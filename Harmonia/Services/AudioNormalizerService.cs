@@ -43,7 +43,7 @@ namespace Harmonia.Services
                 Arguments = $"/r /k /c \"{mp3Path}\""
             };
 
-            _processWrapper.StartWaitForExitWithTimeoutKill(processStartInfo);
+            _processWrapper.StartWaitForExitWithTimeoutKill(processStartInfo, timeoutSeconds: 600);
         }
     }
 }
