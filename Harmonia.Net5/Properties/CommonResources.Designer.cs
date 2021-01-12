@@ -22,7 +22,7 @@ namespace Harmonia.Net5.Properties {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class CommonResources {
+    public class CommonResources {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
@@ -36,7 +36,7 @@ namespace Harmonia.Net5.Properties {
         ///   Returns the cached ResourceManager instance used by this class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Resources.ResourceManager ResourceManager {
+        public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Harmonia.Net5.Properties.CommonResources", typeof(CommonResources).Assembly);
@@ -51,7 +51,7 @@ namespace Harmonia.Net5.Properties {
         ///   resource lookups using this strongly typed resource class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Globalization.CultureInfo Culture {
+        public static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
@@ -63,7 +63,7 @@ namespace Harmonia.Net5.Properties {
         /// <summary>
         ///   Looks up a localized string similar to The following error occurred: {0}. .
         /// </summary>
-        internal static string ErrorOccurredMessage {
+        public static string ErrorOccurredMessage {
             get {
                 return ResourceManager.GetString("ErrorOccurredMessage", resourceCulture);
             }
@@ -72,7 +72,7 @@ namespace Harmonia.Net5.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Error occurred.
         /// </summary>
-        internal static string ErrorOccurredTitle {
+        public static string ErrorOccurredTitle {
             get {
                 return ResourceManager.GetString("ErrorOccurredTitle", resourceCulture);
             }
@@ -81,7 +81,7 @@ namespace Harmonia.Net5.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Harmonia.
         /// </summary>
-        internal static string Harmonia {
+        public static string Harmonia {
             get {
                 return ResourceManager.GetString("Harmonia", resourceCulture);
             }
@@ -90,7 +90,7 @@ namespace Harmonia.Net5.Properties {
         /// <summary>
         ///   Looks up a localized string similar to No.
         /// </summary>
-        internal static string No {
+        public static string No {
             get {
                 return ResourceManager.GetString("No", resourceCulture);
             }
@@ -99,7 +99,7 @@ namespace Harmonia.Net5.Properties {
         /// <summary>
         ///   Looks up a localized string similar to If this error persists, it might be necessary to update the application..
         /// </summary>
-        internal static string String {
+        public static string String {
             get {
                 return ResourceManager.GetString("String", resourceCulture);
             }
@@ -108,7 +108,7 @@ namespace Harmonia.Net5.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Yes.
         /// </summary>
-        internal static string Yes {
+        public static string Yes {
             get {
                 return ResourceManager.GetString("Yes", resourceCulture);
             }

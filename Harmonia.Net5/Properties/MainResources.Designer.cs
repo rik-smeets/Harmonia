@@ -22,7 +22,7 @@ namespace Harmonia.Net5.Properties {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class MainResources {
+    public class MainResources {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
@@ -36,7 +36,7 @@ namespace Harmonia.Net5.Properties {
         ///   Returns the cached ResourceManager instance used by this class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Resources.ResourceManager ResourceManager {
+        public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Harmonia.Net5.Properties.MainResources", typeof(MainResources).Assembly);
@@ -51,7 +51,7 @@ namespace Harmonia.Net5.Properties {
         ///   resource lookups using this strongly typed resource class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Globalization.CultureInfo Culture {
+        public static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
@@ -63,7 +63,7 @@ namespace Harmonia.Net5.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Artist.
         /// </summary>
-        internal static string Artist {
+        public static string Artist {
             get {
                 return ResourceManager.GetString("Artist", resourceCulture);
             }
@@ -72,7 +72,7 @@ namespace Harmonia.Net5.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Delete (Ctrl + Del).
         /// </summary>
-        internal static string btnDelete {
+        public static string btnDelete {
             get {
                 return ResourceManager.GetString("btnDelete", resourceCulture);
             }
@@ -81,7 +81,7 @@ namespace Harmonia.Net5.Properties {
         /// <summary>
         ///   Looks up a localized string similar to About _Harmonia.
         /// </summary>
-        internal static string btnOpenAboutWindow {
+        public static string btnOpenAboutWindow {
             get {
                 return ResourceManager.GetString("btnOpenAboutWindow", resourceCulture);
             }
@@ -90,7 +90,7 @@ namespace Harmonia.Net5.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Open output _directory.
         /// </summary>
-        internal static string btnOpenOutputDirectory {
+        public static string btnOpenOutputDirectory {
             get {
                 return ResourceManager.GetString("btnOpenOutputDirectory", resourceCulture);
             }
@@ -99,7 +99,7 @@ namespace Harmonia.Net5.Properties {
         /// <summary>
         ///   Looks up a localized string similar to _Settings.
         /// </summary>
-        internal static string btnSettings {
+        public static string btnSettings {
             get {
                 return ResourceManager.GetString("btnSettings", resourceCulture);
             }
@@ -108,7 +108,7 @@ namespace Harmonia.Net5.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Start _all.
         /// </summary>
-        internal static string btnStartAll {
+        public static string btnStartAll {
             get {
                 return ResourceManager.GetString("btnStartAll", resourceCulture);
             }
@@ -117,7 +117,7 @@ namespace Harmonia.Net5.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Completed.
         /// </summary>
-        internal static string Completed {
+        public static string Completed {
             get {
                 return ResourceManager.GetString("Completed", resourceCulture);
             }
@@ -126,7 +126,7 @@ namespace Harmonia.Net5.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Delete.
         /// </summary>
-        internal static string Delete {
+        public static string Delete {
             get {
                 return ResourceManager.GetString("Delete", resourceCulture);
             }
@@ -135,7 +135,7 @@ namespace Harmonia.Net5.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Error occurred during download.
         /// </summary>
-        internal static string DownloadCompleteToast_Error {
+        public static string DownloadCompleteToast_Error {
             get {
                 return ResourceManager.GetString("DownloadCompleteToast_Error", resourceCulture);
             }
@@ -144,7 +144,7 @@ namespace Harmonia.Net5.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Downloads finished.
         /// </summary>
-        internal static string DownloadCompleteToast_Success {
+        public static string DownloadCompleteToast_Success {
             get {
                 return ResourceManager.GetString("DownloadCompleteToast_Success", resourceCulture);
             }
@@ -153,7 +153,7 @@ namespace Harmonia.Net5.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Failed.
         /// </summary>
-        internal static string Failed {
+        public static string Failed {
             get {
                 return ResourceManager.GetString("Failed", resourceCulture);
             }
@@ -162,7 +162,7 @@ namespace Harmonia.Net5.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Harmonia is monitoring your clipboard. Copy a valid YouTube URL (Ctrl + C) and it will show up in the grid below. Artist and title will be suggested. You can change these if you like. Start downloading and converting by selecting Start all. Completed and running downloads will be ignored, so feel free to start downloading when still adding new YouTube URLs..
         /// </summary>
-        internal static string Harmonia_Description {
+        public static string Harmonia_Description {
             get {
                 return ResourceManager.GetString("Harmonia_Description", resourceCulture);
             }
@@ -171,7 +171,7 @@ namespace Harmonia.Net5.Properties {
         /// <summary>
         ///   Looks up a localized string similar to The MP3Gain executable, used for normalizing audio, cannot be found. Would you like to open Settings to fix this?.
         /// </summary>
-        internal static string MP3GainExecutableNotFound_Message {
+        public static string MP3GainExecutableNotFound_Message {
             get {
                 return ResourceManager.GetString("MP3GainExecutableNotFound_Message", resourceCulture);
             }
@@ -180,7 +180,7 @@ namespace Harmonia.Net5.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Audio normalization will be skipped..
         /// </summary>
-        internal static string Mp3GainExecutableNotFound_SkippingAudioNormalization {
+        public static string Mp3GainExecutableNotFound_SkippingAudioNormalization {
             get {
                 return ResourceManager.GetString("Mp3GainExecutableNotFound_SkippingAudioNormalization", resourceCulture);
             }
@@ -189,7 +189,7 @@ namespace Harmonia.Net5.Properties {
         /// <summary>
         ///   Looks up a localized string similar to MP3Gain executable cannot be found.
         /// </summary>
-        internal static string MP3GainExecutableNotFound_Title {
+        public static string MP3GainExecutableNotFound_Title {
             get {
                 return ResourceManager.GetString("MP3GainExecutableNotFound_Title", resourceCulture);
             }
@@ -198,7 +198,7 @@ namespace Harmonia.Net5.Properties {
         /// <summary>
         ///   Looks up a localized string similar to New.
         /// </summary>
-        internal static string New {
+        public static string New {
             get {
                 return ResourceManager.GetString("New", resourceCulture);
             }
@@ -207,7 +207,7 @@ namespace Harmonia.Net5.Properties {
         /// <summary>
         ///   Looks up a localized string similar to The output directory: &apos;{0}&apos; does not exist. Select an existing path in Settings..
         /// </summary>
-        internal static string OutputPathDoesNotExist_Message {
+        public static string OutputPathDoesNotExist_Message {
             get {
                 return ResourceManager.GetString("OutputPathDoesNotExist_Message", resourceCulture);
             }
@@ -216,7 +216,7 @@ namespace Harmonia.Net5.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Output path does not exist.
         /// </summary>
-        internal static string OutputPathDoesNotExist_Title {
+        public static string OutputPathDoesNotExist_Title {
             get {
                 return ResourceManager.GetString("OutputPathDoesNotExist_Title", resourceCulture);
             }
@@ -225,7 +225,7 @@ namespace Harmonia.Net5.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Progress.
         /// </summary>
-        internal static string Progress {
+        public static string Progress {
             get {
                 return ResourceManager.GetString("Progress", resourceCulture);
             }
@@ -234,7 +234,7 @@ namespace Harmonia.Net5.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Running.
         /// </summary>
-        internal static string Running {
+        public static string Running {
             get {
                 return ResourceManager.GetString("Running", resourceCulture);
             }
@@ -243,7 +243,7 @@ namespace Harmonia.Net5.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Status.
         /// </summary>
-        internal static string Status {
+        public static string Status {
             get {
                 return ResourceManager.GetString("Status", resourceCulture);
             }
@@ -252,7 +252,7 @@ namespace Harmonia.Net5.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Title.
         /// </summary>
-        internal static string Title {
+        public static string Title {
             get {
                 return ResourceManager.GetString("Title", resourceCulture);
             }
@@ -261,7 +261,7 @@ namespace Harmonia.Net5.Properties {
         /// <summary>
         ///   Looks up a localized string similar to An error occurred when Harmonia was updating.
         /// </summary>
-        internal static string Update_Error {
+        public static string Update_Error {
             get {
                 return ResourceManager.GetString("Update_Error", resourceCulture);
             }
@@ -270,7 +270,7 @@ namespace Harmonia.Net5.Properties {
         /// <summary>
         ///   Looks up a localized string similar to An update for Harmonia is available. Upgrading is strongly recommended, since older versions might not work properly anymore. It won&apos;t take long. Would you like to download and install the update?.
         /// </summary>
-        internal static string UpdateAvailable_Message {
+        public static string UpdateAvailable_Message {
             get {
                 return ResourceManager.GetString("UpdateAvailable_Message", resourceCulture);
             }
@@ -279,7 +279,7 @@ namespace Harmonia.Net5.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Update available.
         /// </summary>
-        internal static string UpdateAvailable_Title {
+        public static string UpdateAvailable_Title {
             get {
                 return ResourceManager.GetString("UpdateAvailable_Title", resourceCulture);
             }
@@ -288,7 +288,7 @@ namespace Harmonia.Net5.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Harmonia is currently updating. It will close and relaunch automatically. .
         /// </summary>
-        internal static string Updating_Message {
+        public static string Updating_Message {
             get {
                 return ResourceManager.GetString("Updating_Message", resourceCulture);
             }
@@ -297,7 +297,7 @@ namespace Harmonia.Net5.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Updating....
         /// </summary>
-        internal static string Updating_Title {
+        public static string Updating_Title {
             get {
                 return ResourceManager.GetString("Updating_Title", resourceCulture);
             }
@@ -306,7 +306,7 @@ namespace Harmonia.Net5.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Error occurred whilst getting video metadata.
         /// </summary>
-        internal static string VideoMetaDataToast_Error {
+        public static string VideoMetaDataToast_Error {
             get {
                 return ResourceManager.GetString("VideoMetaDataToast_Error", resourceCulture);
             }
@@ -315,7 +315,7 @@ namespace Harmonia.Net5.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Harmonia.
         /// </summary>
-        internal static string Window_Title {
+        public static string Window_Title {
             get {
                 return ResourceManager.GetString("Window_Title", resourceCulture);
             }

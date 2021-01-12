@@ -22,7 +22,7 @@ namespace Harmonia.Net5.Properties {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class SettingsResources {
+    public class SettingsResources {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
@@ -36,7 +36,7 @@ namespace Harmonia.Net5.Properties {
         ///   Returns the cached ResourceManager instance used by this class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Resources.ResourceManager ResourceManager {
+        public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Harmonia.Net5.Properties.SettingsResources", typeof(SettingsResources).Assembly);
@@ -51,7 +51,7 @@ namespace Harmonia.Net5.Properties {
         ///   resource lookups using this strongly typed resource class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Globalization.CultureInfo Culture {
+        public static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
@@ -63,7 +63,7 @@ namespace Harmonia.Net5.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Select _folder.
         /// </summary>
-        internal static string btnSelectFolder {
+        public static string btnSelectFolder {
             get {
                 return ResourceManager.GetString("btnSelectFolder", resourceCulture);
             }
@@ -72,7 +72,7 @@ namespace Harmonia.Net5.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Select _executable.
         /// </summary>
-        internal static string btnSelectMp3GainFolder {
+        public static string btnSelectMp3GainFolder {
             get {
                 return ResourceManager.GetString("btnSelectMp3GainFolder", resourceCulture);
             }
@@ -81,7 +81,7 @@ namespace Harmonia.Net5.Properties {
         /// <summary>
         ///   Looks up a localized string similar to MP3GAIN EXECUTABLE LOCATION.
         /// </summary>
-        internal static string MP3Gain_ExecutableLocation {
+        public static string MP3Gain_ExecutableLocation {
             get {
                 return ResourceManager.GetString("MP3Gain_ExecutableLocation", resourceCulture);
             }
@@ -90,7 +90,7 @@ namespace Harmonia.Net5.Properties {
         /// <summary>
         ///   Looks up a localized string similar to MP3Gain is used to normalize audio. It cannot be found at the location currently set. Would you like to download/install MP3Gain?.
         /// </summary>
-        internal static string Mp3GainHelp_MissingExecutable {
+        public static string Mp3GainHelp_MissingExecutable {
             get {
                 return ResourceManager.GetString("Mp3GainHelp_MissingExecutable", resourceCulture);
             }
@@ -99,7 +99,7 @@ namespace Harmonia.Net5.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Please set the correct path to the MP3Gain.exe file. Otherwise, audio will not be normalized..
         /// </summary>
-        internal static string Mp3GainHelp_SetValidPath {
+        public static string Mp3GainHelp_SetValidPath {
             get {
                 return ResourceManager.GetString("Mp3GainHelp_SetValidPath", resourceCulture);
             }
@@ -108,7 +108,7 @@ namespace Harmonia.Net5.Properties {
         /// <summary>
         ///   Looks up a localized string similar to MP3Gain Help.
         /// </summary>
-        internal static string Mp3GainHelp_Title {
+        public static string Mp3GainHelp_Title {
             get {
                 return ResourceManager.GetString("Mp3GainHelp_Title", resourceCulture);
             }
@@ -117,7 +117,7 @@ namespace Harmonia.Net5.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Mp3Gain is used to normalize audio..
         /// </summary>
-        internal static string Mp3GainHelp_ValidPath {
+        public static string Mp3GainHelp_ValidPath {
             get {
                 return ResourceManager.GetString("Mp3GainHelp_ValidPath", resourceCulture);
             }
@@ -126,7 +126,7 @@ namespace Harmonia.Net5.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Output directory.
         /// </summary>
-        internal static string OutputDirectory {
+        public static string OutputDirectory {
             get {
                 return ResourceManager.GetString("OutputDirectory", resourceCulture);
             }
@@ -135,7 +135,7 @@ namespace Harmonia.Net5.Properties {
         /// <summary>
         ///   Looks up a localized string similar to _Theme and color scheme.
         /// </summary>
-        internal static string ThemeAndColorScheme {
+        public static string ThemeAndColorScheme {
             get {
                 return ResourceManager.GetString("ThemeAndColorScheme", resourceCulture);
             }
@@ -144,7 +144,7 @@ namespace Harmonia.Net5.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Settings.
         /// </summary>
-        internal static string Window_Title {
+        public static string Window_Title {
             get {
                 return ResourceManager.GetString("Window_Title", resourceCulture);
             }

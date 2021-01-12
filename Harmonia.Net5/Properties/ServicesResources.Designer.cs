@@ -22,7 +22,7 @@ namespace Harmonia.Net5.Properties {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class ServicesResources {
+    public class ServicesResources {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
@@ -36,7 +36,7 @@ namespace Harmonia.Net5.Properties {
         ///   Returns the cached ResourceManager instance used by this class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Resources.ResourceManager ResourceManager {
+        public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Harmonia.Net5.Properties.ServicesResources", typeof(ServicesResources).Assembly);
@@ -51,7 +51,7 @@ namespace Harmonia.Net5.Properties {
         ///   resource lookups using this strongly typed resource class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Globalization.CultureInfo Culture {
+        public static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
@@ -63,7 +63,7 @@ namespace Harmonia.Net5.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Audio normalization failed because it took longer than 60 seconds..
         /// </summary>
-        internal static string MP3Gain_Timeout {
+        public static string MP3Gain_Timeout {
             get {
                 return ResourceManager.GetString("MP3Gain_Timeout", resourceCulture);
             }

@@ -22,7 +22,7 @@ namespace Harmonia.Net5.Properties {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class AboutResources {
+    public class AboutResources {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
@@ -36,7 +36,7 @@ namespace Harmonia.Net5.Properties {
         ///   Returns the cached ResourceManager instance used by this class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Resources.ResourceManager ResourceManager {
+        public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Harmonia.Net5.Properties.AboutResources", typeof(AboutResources).Assembly);
@@ -51,7 +51,7 @@ namespace Harmonia.Net5.Properties {
         ///   resource lookups using this strongly typed resource class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Globalization.CultureInfo Culture {
+        public static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
@@ -63,7 +63,7 @@ namespace Harmonia.Net5.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Harmonia is an open source application hosted on GitHub. For help, filing issues, licensing, the source code and more, please visit .
         /// </summary>
-        internal static string AboutHarmonia {
+        public static string AboutHarmonia {
             get {
                 return ResourceManager.GetString("AboutHarmonia", resourceCulture);
             }
@@ -72,7 +72,7 @@ namespace Harmonia.Net5.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Harmonia is the Greek goddess of harmony and concord. Read more about her at .
         /// </summary>
-        internal static string Etymology_Description {
+        public static string Etymology_Description {
             get {
                 return ResourceManager.GetString("Etymology_Description", resourceCulture);
             }
@@ -81,7 +81,7 @@ namespace Harmonia.Net5.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Etymology.
         /// </summary>
-        internal static string Etymology_Title {
+        public static string Etymology_Title {
             get {
                 return ResourceManager.GetString("Etymology_Title", resourceCulture);
             }
@@ -90,7 +90,7 @@ namespace Harmonia.Net5.Properties {
         /// <summary>
         ///   Looks up a localized string similar to About Harmonia (version {0}).
         /// </summary>
-        internal static string Window_Title {
+        public static string Window_Title {
             get {
                 return ResourceManager.GetString("Window_Title", resourceCulture);
             }

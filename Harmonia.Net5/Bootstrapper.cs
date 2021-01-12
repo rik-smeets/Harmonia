@@ -52,7 +52,7 @@ namespace Harmonia
         private static void RegisterExternalDependencies(IUnityContainer container)
             => container
             .RegisterType<IDialogCoordinator, DialogCoordinator>()
-            .RegisterType<INotificationManager, NotificationManager>()
+            .RegisterInstance<INotificationManager>(new NotificationManager())
             .RegisterInstance<IUpdateManager>(CreateUpdateManager());
 
         private static UpdateManager CreateUpdateManager()

@@ -22,7 +22,7 @@ namespace Harmonia.Net5.Properties {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class ThemeResources {
+    public class ThemeResources {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
@@ -36,7 +36,7 @@ namespace Harmonia.Net5.Properties {
         ///   Returns the cached ResourceManager instance used by this class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Resources.ResourceManager ResourceManager {
+        public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Harmonia.Net5.Properties.ThemeResources", typeof(ThemeResources).Assembly);
@@ -51,7 +51,7 @@ namespace Harmonia.Net5.Properties {
         ///   resource lookups using this strongly typed resource class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Globalization.CultureInfo Culture {
+        public static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
@@ -63,7 +63,7 @@ namespace Harmonia.Net5.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Amber.
         /// </summary>
-        internal static string Amber {
+        public static string Amber {
             get {
                 return ResourceManager.GetString("Amber", resourceCulture);
             }
@@ -72,7 +72,7 @@ namespace Harmonia.Net5.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Blue.
         /// </summary>
-        internal static string Blue {
+        public static string Blue {
             get {
                 return ResourceManager.GetString("Blue", resourceCulture);
             }
@@ -81,7 +81,7 @@ namespace Harmonia.Net5.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Brown.
         /// </summary>
-        internal static string Brown {
+        public static string Brown {
             get {
                 return ResourceManager.GetString("Brown", resourceCulture);
             }
@@ -90,7 +90,7 @@ namespace Harmonia.Net5.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Cobalt.
         /// </summary>
-        internal static string Cobalt {
+        public static string Cobalt {
             get {
                 return ResourceManager.GetString("Cobalt", resourceCulture);
             }
@@ -99,7 +99,7 @@ namespace Harmonia.Net5.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Crimson.
         /// </summary>
-        internal static string Crimson {
+        public static string Crimson {
             get {
                 return ResourceManager.GetString("Crimson", resourceCulture);
             }
@@ -108,7 +108,7 @@ namespace Harmonia.Net5.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Cyan.
         /// </summary>
-        internal static string Cyan {
+        public static string Cyan {
             get {
                 return ResourceManager.GetString("Cyan", resourceCulture);
             }
@@ -117,7 +117,7 @@ namespace Harmonia.Net5.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Dark.
         /// </summary>
-        internal static string Dark {
+        public static string Dark {
             get {
                 return ResourceManager.GetString("Dark", resourceCulture);
             }
@@ -126,7 +126,7 @@ namespace Harmonia.Net5.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Emerald.
         /// </summary>
-        internal static string Emerald {
+        public static string Emerald {
             get {
                 return ResourceManager.GetString("Emerald", resourceCulture);
             }
@@ -135,7 +135,7 @@ namespace Harmonia.Net5.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Green.
         /// </summary>
-        internal static string Green {
+        public static string Green {
             get {
                 return ResourceManager.GetString("Green", resourceCulture);
             }
@@ -144,7 +144,7 @@ namespace Harmonia.Net5.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Indigo.
         /// </summary>
-        internal static string Indigo {
+        public static string Indigo {
             get {
                 return ResourceManager.GetString("Indigo", resourceCulture);
             }
@@ -153,7 +153,7 @@ namespace Harmonia.Net5.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Light.
         /// </summary>
-        internal static string Light {
+        public static string Light {
             get {
                 return ResourceManager.GetString("Light", resourceCulture);
             }
@@ -162,7 +162,7 @@ namespace Harmonia.Net5.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Lime.
         /// </summary>
-        internal static string Lime {
+        public static string Lime {
             get {
                 return ResourceManager.GetString("Lime", resourceCulture);
             }
@@ -171,7 +171,7 @@ namespace Harmonia.Net5.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Magenta.
         /// </summary>
-        internal static string Magenta {
+        public static string Magenta {
             get {
                 return ResourceManager.GetString("Magenta", resourceCulture);
             }
@@ -180,7 +180,7 @@ namespace Harmonia.Net5.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Mauve.
         /// </summary>
-        internal static string Mauve {
+        public static string Mauve {
             get {
                 return ResourceManager.GetString("Mauve", resourceCulture);
             }
@@ -189,7 +189,7 @@ namespace Harmonia.Net5.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Olive.
         /// </summary>
-        internal static string Olive {
+        public static string Olive {
             get {
                 return ResourceManager.GetString("Olive", resourceCulture);
             }
@@ -198,7 +198,7 @@ namespace Harmonia.Net5.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Orange.
         /// </summary>
-        internal static string Orange {
+        public static string Orange {
             get {
                 return ResourceManager.GetString("Orange", resourceCulture);
             }
@@ -207,7 +207,7 @@ namespace Harmonia.Net5.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Pink.
         /// </summary>
-        internal static string Pink {
+        public static string Pink {
             get {
                 return ResourceManager.GetString("Pink", resourceCulture);
             }
@@ -216,7 +216,7 @@ namespace Harmonia.Net5.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Purple.
         /// </summary>
-        internal static string Purple {
+        public static string Purple {
             get {
                 return ResourceManager.GetString("Purple", resourceCulture);
             }
@@ -225,7 +225,7 @@ namespace Harmonia.Net5.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Red.
         /// </summary>
-        internal static string Red {
+        public static string Red {
             get {
                 return ResourceManager.GetString("Red", resourceCulture);
             }
@@ -234,7 +234,7 @@ namespace Harmonia.Net5.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Sienna.
         /// </summary>
-        internal static string Sienna {
+        public static string Sienna {
             get {
                 return ResourceManager.GetString("Sienna", resourceCulture);
             }
@@ -243,7 +243,7 @@ namespace Harmonia.Net5.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Steel.
         /// </summary>
-        internal static string Steel {
+        public static string Steel {
             get {
                 return ResourceManager.GetString("Steel", resourceCulture);
             }
@@ -252,7 +252,7 @@ namespace Harmonia.Net5.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Taupe.
         /// </summary>
-        internal static string Taupe {
+        public static string Taupe {
             get {
                 return ResourceManager.GetString("Taupe", resourceCulture);
             }
@@ -261,7 +261,7 @@ namespace Harmonia.Net5.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Teal.
         /// </summary>
-        internal static string Teal {
+        public static string Teal {
             get {
                 return ResourceManager.GetString("Teal", resourceCulture);
             }
@@ -270,7 +270,7 @@ namespace Harmonia.Net5.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Violet.
         /// </summary>
-        internal static string Violet {
+        public static string Violet {
             get {
                 return ResourceManager.GetString("Violet", resourceCulture);
             }
@@ -279,7 +279,7 @@ namespace Harmonia.Net5.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Yellow.
         /// </summary>
-        internal static string Yellow {
+        public static string Yellow {
             get {
                 return ResourceManager.GetString("Yellow", resourceCulture);
             }
