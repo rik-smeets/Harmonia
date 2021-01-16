@@ -61,9 +61,7 @@ namespace Harmonia.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The following error occurred: {0}. 
-        ///
-        ///If this error persists, it might be necessary to update the application..
+        ///   Looks up a localized string similar to The following error occurred: {0}. .
         /// </summary>
         public static string ErrorOccurredMessage {
             get {
@@ -95,6 +93,15 @@ namespace Harmonia.Properties {
         public static string No {
             get {
                 return ResourceManager.GetString("No", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to If this error persists, it might be necessary to update the application..
+        /// </summary>
+        public static string String {
+            get {
+                return ResourceManager.GetString("String", resourceCulture);
             }
         }
         

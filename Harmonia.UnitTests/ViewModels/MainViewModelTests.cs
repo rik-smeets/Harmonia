@@ -8,6 +8,7 @@ using MahApps.Metro.Controls.Dialogs;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using Notifications.Wpf;
+using Notifications.Wpf.Core;
 using Shouldly;
 using YoutubeExplode.Exceptions;
 using YoutubeExplode.Videos;
@@ -366,15 +367,17 @@ namespace Harmonia.UnitTests.ViewModels
         private void SetupNotificationManagerMock(string expectedMessage, NotificationType notificationType)
         {
             _notificationManagerMock
-               .Setup(m => m.Show(
+               .Setup(m => m.ShowAsync(
                    It.Is<NotificationContent>(
                        n => n.Title == CommonResources.Harmonia &&
                        n.Message == expectedMessage &&
                        n.Type == notificationType),
-                   string.Empty,
+                   default,
                    TimeSpan.FromSeconds(10),
                    default,
-                   default));
+                   default,
+                   default))
+               .Returns(Task.CompletedTask);
         }
 
         private void ValidateFailedDownload(DownloadItem downloadItem)

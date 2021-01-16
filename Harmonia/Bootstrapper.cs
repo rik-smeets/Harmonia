@@ -5,7 +5,7 @@ using Harmonia.Settings.Interfaces;
 using Harmonia.Wrappers;
 using Harmonia.Wrappers.Interfaces;
 using MahApps.Metro.Controls.Dialogs;
-using Notifications.Wpf;
+using Notifications.Wpf.Core;
 using Onova;
 using Onova.Services;
 using Unity;
@@ -52,7 +52,7 @@ namespace Harmonia
         private static void RegisterExternalDependencies(IUnityContainer container)
             => container
             .RegisterType<IDialogCoordinator, DialogCoordinator>()
-            .RegisterType<INotificationManager, NotificationManager>()
+            .RegisterInstance<INotificationManager>(new NotificationManager())
             .RegisterInstance<IUpdateManager>(CreateUpdateManager());
 
         private static UpdateManager CreateUpdateManager()

@@ -118,9 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="ErrorOccurredMessage" xml:space="preserve">
-    <value>The following error occurred: {0}. 
-
-If this error persists, it might be necessary to update the application.</value>
+    <value>The following error occurred: {0}. </value>
   </data>
   <data name="ErrorOccurredTitle" xml:space="preserve">
     <value>Error occurred</value>
@@ -130,6 +128,9 @@ If this error persists, it might be necessary to update the application.</value>
   </data>
   <data name="No" xml:space="preserve">
     <value>No</value>
+  </data>
+  <data name="String" xml:space="preserve">
+    <value>If this error persists, it might be necessary to update the application.</value>
   </data>
   <data name="Yes" xml:space="preserve">
     <value>Yes</value>

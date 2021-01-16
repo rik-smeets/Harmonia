@@ -194,7 +194,7 @@ namespace Harmonia.UnitTests.ViewModels
                 .SetupSet(m => m.IsUpgradeRequired = false);
 
             _settingsRetrieverMock
-                .Setup(m => m.PerformUpgrade());
+                .Setup(m => m.Upgrade());
 
             _settingsProvider.UpgradeIfRequired();
         }

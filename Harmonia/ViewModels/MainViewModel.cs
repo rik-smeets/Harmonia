@@ -7,7 +7,7 @@ using Harmonia.Models;
 using Harmonia.Properties;
 using Harmonia.Services.Interfaces;
 using MahApps.Metro.Controls.Dialogs;
-using Notifications.Wpf;
+using Notifications.Wpf.Core;
 
 namespace Harmonia.ViewModels
 {
@@ -79,7 +79,7 @@ namespace Harmonia.ViewModels
             {
                 downloadItem.SetFailed();
 
-                ShowToast(MainResources.VideoMetaDataToast_Error, NotificationType.Error);
+                await ShowToast(MainResources.VideoMetaDataToast_Error, NotificationType.Error);
 
                 await ShowErrorDialog(ex);
             }
@@ -102,11 +102,11 @@ namespace Harmonia.ViewModels
                     await HandleDownload(downloadItem);
                 }));
 
-                ShowToast(MainResources.DownloadCompleteToast_Success, NotificationType.Success);
+                await ShowToast(MainResources.DownloadCompleteToast_Success, NotificationType.Success);
             }
             catch (Exception ex)
             {
-                ShowToast(MainResources.DownloadCompleteToast_Error, NotificationType.Error);
+                await ShowToast(MainResources.DownloadCompleteToast_Error, NotificationType.Error);
 
                 await ShowErrorDialog(ex);
             }
@@ -153,7 +153,7 @@ namespace Harmonia.ViewModels
             }
             catch (Exception ex)
             {
-                ShowToast(MainResources.Update_Error, NotificationType.Error);
+                await ShowToast(MainResources.Update_Error, NotificationType.Error);
 
                 await ShowErrorDialog(ex);
             }
@@ -208,9 +208,9 @@ namespace Harmonia.ViewModels
                 message: string.Format(CommonResources.ErrorOccurredMessage, ex.Message));
         }
 
-        private void ShowToast(string message, NotificationType notificationType)
+        private async Task ShowToast(string message, NotificationType notificationType)
         {
-            _notificationManager.Show(
+            await _notificationManager.ShowAsync(
                 new NotificationContent
                 {
                     Title = CommonResources.Harmonia,

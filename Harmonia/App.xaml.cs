@@ -12,7 +12,7 @@ namespace Harmonia
         {
             base.OnStartup(e);
 
-            var container = Bootstrapper.Register(new UnityContainer());
+            var container = Bootstrapper.Register(new UnityContainer().AddExtension(new Diagnostic()));
 
             var settingsProvider = container.Resolve<ISettingsProvider>();
             settingsProvider.UpgradeIfRequired();

@@ -1,59 +1,59 @@
-﻿using Harmonia.Settings.Interfaces;
+﻿using System.ComponentModel;
+using System.Configuration;
+using Harmonia.Settings.Interfaces;
 
 namespace Harmonia.Settings
 {
-    public class SettingsRetriever : ISettingsRetriever
+    public class SettingsRetriever : ApplicationSettingsBase, ISettingsRetriever
     {
+        public static SettingsRetriever Default { get; } = (SettingsRetriever)Synchronized(new SettingsRetriever());
+
+        protected override void OnPropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            Save();
+            base.OnPropertyChanged(sender, e);
+        }
+
+        [UserScopedSetting()]
+        [DefaultSettingValue("")]
         public string OutputPath
         {
-            get => Properties.Settings.Default.OutputPath;
-            set
-            {
-                Properties.Settings.Default.OutputPath = value;
-                Properties.Settings.Default.Save();
-            }
+            get => (string)this[nameof(OutputPath)];
+            set => this[nameof(OutputPath)] = value;
         }
 
+        [UserScopedSetting()]
+        [DefaultSettingValue("")]
         public string Mp3GainPath
         {
-            get => Properties.Settings.Default.Mp3GainPath;
-            set
-            {
-                Properties.Settings.Default.Mp3GainPath = value;
-                Properties.Settings.Default.Save();
-            }
+            get => (string)this[nameof(Mp3GainPath)];
+            set => this[nameof(Mp3GainPath)] = value;
         }
 
+        [UserScopedSetting()]
+        [DefaultSettingValue("")]
         public string ThemeBaseColor
         {
-            get => Properties.Settings.Default.ThemeBaseColor;
-            set
-            {
-                Properties.Settings.Default.ThemeBaseColor = value;
-                Properties.Settings.Default.Save();
-            }
+            get => (string)this[nameof(ThemeBaseColor)];
+            set => this[nameof(ThemeBaseColor)] = value;
         }
 
+        [UserScopedSetting()]
+        [DefaultSettingValue("")]
         public string ThemeColorScheme
         {
-            get => Properties.Settings.Default.ThemeColorScheme;
-            set
-            {
-                Properties.Settings.Default.ThemeColorScheme = value;
-                Properties.Settings.Default.Save();
-            }
+            get => (string)this[nameof(ThemeColorScheme)];
+            set => this[nameof(ThemeColorScheme)] = value;
         }
 
+        [UserScopedSetting()]
+        [DefaultSettingValue("True")]
         public bool IsUpgradeRequired
         {
-            get => Properties.Settings.Default.IsUpgradeRequired;
-            set
-            {
-                Properties.Settings.Default.IsUpgradeRequired = value;
-                Properties.Settings.Default.Save();
-            }
+            get => (bool)this[nameof(IsUpgradeRequired)];
+            set => this[nameof(IsUpgradeRequired)] = value;
         }
 
-        public void PerformUpgrade() => Properties.Settings.Default.Upgrade();
+        public override void Upgrade() => base.Upgrade();
     }
 }

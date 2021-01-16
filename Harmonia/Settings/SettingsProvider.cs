@@ -58,7 +58,7 @@ namespace Harmonia.Settings
         {
             if (_settingsRetriever.IsUpgradeRequired)
             {
-                _settingsRetriever.PerformUpgrade();
+                _settingsRetriever.Upgrade();
                 _settingsRetriever.IsUpgradeRequired = false;
             }
         }
