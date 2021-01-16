@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System.Diagnostics;
+using System.IO;
 using System.Threading.Tasks;
 using Harmonia.Services.Interfaces;
 using Xabe.FFmpeg;
@@ -15,7 +16,9 @@ namespace Harmonia.Services
                 throw new FileNotFoundException($"MP4 was not found at the specified path {mp4Path}. Audio conversion failed.");
             }
 
-            await FFmpegDownloader.GetLatestVersion(FFmpegVersion.Official);
+            var executablePath = Path.GetDirectoryName(Process.GetCurrentProcess().MainModule.FileName);
+            await FFmpegDownloader.GetLatestVersion(FFmpegVersion.Official, executablePath);
+            FFmpeg.SetExecutablesPath(executablePath);
 
             var mp3Path = mp4Path.Replace(".mp4", ".mp3");
             await (await FFmpeg.Conversions.FromSnippet.Convert(mp4Path, mp3Path))
