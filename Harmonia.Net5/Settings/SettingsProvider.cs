@@ -1,6 +1,7 @@
 ﻿using System.IO;
 using ControlzEx.Theming;
 using Harmonia.Net5.Properties;
+using Harmonia.Net5.Settings;
 using Harmonia.Settings.Interfaces;
 using Harmonia.Wrappers.Interfaces;
 using static System.Environment;
@@ -9,12 +10,11 @@ namespace Harmonia.Settings
 {
     public class SettingsProvider : ISettingsProvider
     {
-        private readonly ISettingsRetriever _settingsRetriever;
         private readonly IStorageWrapper _storageWrapper;
+        private readonly SettingsRetriever _settingsRetriever = SettingsRetriever.Default;
 
-        public SettingsProvider(ISettingsRetriever settingsRetriever, IStorageWrapper storageWrapper)
+        public SettingsProvider(IStorageWrapper storageWrapper)
         {
-            _settingsRetriever = settingsRetriever;
             _storageWrapper = storageWrapper;
         }
 
@@ -23,7 +23,7 @@ namespace Harmonia.Settings
             get => !string.IsNullOrEmpty(_settingsRetriever.OutputPath)
                 ? _settingsRetriever.OutputPath
                 : GetFolderPath(SpecialFolder.MyMusic);
-            set => _settingsRetriever.OutputPath = value;
+            set => SettingsRetriever.Default.OutputPath = value;
         }
 
         public string Mp3GainPath
@@ -58,7 +58,7 @@ namespace Harmonia.Settings
         {
             if (_settingsRetriever.IsUpgradeRequired)
             {
-                _settingsRetriever.PerformUpgrade();
+                _settingsRetriever.Upgrade();
                 _settingsRetriever.IsUpgradeRequired = false;
             }
         }

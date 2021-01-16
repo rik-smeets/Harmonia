@@ -36,9 +36,7 @@ namespace Harmonia
             .RegisterType<IAutoUpdateService, AutoUpdateService>();
 
         private static void RegisterSettings(IUnityContainer container)
-            => container
-            .RegisterType<ISettingsProvider, SettingsProvider>()
-            .RegisterType<ISettingsRetriever, SettingsRetriever>();
+            => container.RegisterType<ISettingsProvider, SettingsProvider>();
 
         private static void RegisterWrappers(IUnityContainer container)
             => container

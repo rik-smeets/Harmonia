@@ -1,59 +1,56 @@
-﻿using Harmonia.Settings.Interfaces;
+﻿using System.ComponentModel;
+using System.Configuration;
 
-namespace Harmonia.Settings
+namespace Harmonia.Net5.Settings
 {
-    public class SettingsRetriever : ISettingsRetriever
+    public class SettingsRetriever : ApplicationSettingsBase
     {
+        public static SettingsRetriever Default { get; } = (SettingsRetriever)Synchronized(new SettingsRetriever());
+
+        protected override void OnPropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            Save();
+            base.OnPropertyChanged(sender, e);
+        }
+
+        [UserScopedSetting()]
+        [DefaultSettingValue("")]
         public string OutputPath
         {
-            get => Net5.Properties.Settings.Default.OutputPath;
-            set
-            {
-                Net5.Properties.Settings.Default.OutputPath = value;
-                Net5.Properties.Settings.Default.Save();
-            }
+            get => (string)this[nameof(OutputPath)];
+            set => this[nameof(OutputPath)] = value;
         }
 
+        [UserScopedSetting()]
+        [DefaultSettingValue("")]
         public string Mp3GainPath
         {
-            get => Net5.Properties.Settings.Default.Mp3GainPath;
-            set
-            {
-                Net5.Properties.Settings.Default.Mp3GainPath = value;
-                Net5.Properties.Settings.Default.Save();
-            }
+            get => (string)this[nameof(Mp3GainPath)];
+            set => this[nameof(Mp3GainPath)] = value;
         }
 
+        [UserScopedSetting()]
+        [DefaultSettingValue("")]
         public string ThemeBaseColor
         {
-            get => Net5.Properties.Settings.Default.ThemeBaseColor;
-            set
-            {
-                Net5.Properties.Settings.Default.ThemeBaseColor = value;
-                Net5.Properties.Settings.Default.Save();
-            }
+            get => (string)this[nameof(ThemeBaseColor)];
+            set => this[nameof(ThemeBaseColor)] = value;
         }
 
+        [UserScopedSetting()]
+        [DefaultSettingValue("")]
         public string ThemeColorScheme
         {
-            get => Net5.Properties.Settings.Default.ThemeColorScheme;
-            set
-            {
-                Net5.Properties.Settings.Default.ThemeColorScheme = value;
-                Net5.Properties.Settings.Default.Save();
-            }
+            get => (string)this[nameof(ThemeColorScheme)];
+            set => this[nameof(ThemeColorScheme)] = value;
         }
 
+        [UserScopedSetting()]
+        [DefaultSettingValue("True")]
         public bool IsUpgradeRequired
         {
-            get => Net5.Properties.Settings.Default.IsUpgradeRequired;
-            set
-            {
-                Net5.Properties.Settings.Default.IsUpgradeRequired = value;
-                Net5.Properties.Settings.Default.Save();
-            }
+            get => (bool)this[nameof(IsUpgradeRequired)];
+            set => this[nameof(IsUpgradeRequired)] = value;
         }
-
-        public void PerformUpgrade() => Net5.Properties.Settings.Default.Upgrade();
     }
 }
