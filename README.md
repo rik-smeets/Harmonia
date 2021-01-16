@@ -19,7 +19,7 @@ Download the latest release of Harmonia over at [releases](https://github.com/ri
 Harmonia is a portable application, meaning no installation is necessary. Simply run `Harmonia.exe` from the extracted ZIP-file. 
 
 Note: for audio normalization, MP3Gain is used. You need to have MP3Gain installed, or you can manually set the location of the `mp3gain.exe` executable. Download and install MP3Gain from its [official website](http://mp3gain.sourceforge.net/).
-If MP3Gain is not installed/the executable cannot be located, audio normalization will be skipped. You will receive a notification beforehand.
+If MP3Gain is not installed or the executable cannot be located, audio normalization will be skipped. You will receive a notification beforehand.
 
 ## How to use Harmonia
 ### Instructions
@@ -41,12 +41,11 @@ Harmonia is the Greek goddess of harmony and concord. Read more about her at [Wi
 
 ## Dependencies
 Harmonia is built using the following dependencies:
-- [Costura.Fody](https://github.com/Fody/Costura)
 - [Fody](https://github.com/Fody/Fody)
 - [MahApps.Metro](https://github.com/MahApps/MahApps.Metro)
 - [MSTest V2](https://github.com/microsoft/testfx)
 - [Moq4](https://github.com/moq/moq4)
-- [Notifications.Wpf](https://github.com/Federerer/Notifications.Wpf)
+- [Notifications.Wpf](https://github.com/mjuen/Notifications.Wpf.Core)
 - [Onova](https://github.com/Tyrrrz/Onova)
 - [PropertyChanged.Fody](https://github.com/Fody/PropertyChanged)
 - [SharpClipboard](https://github.com/Willy-Kimura/SharpClipboard)
