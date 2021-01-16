@@ -79,7 +79,7 @@ namespace Harmonia.ViewModels
             {
                 downloadItem.SetFailed();
 
-                await ShowToast(MainResources.VideoMetaDataToast_Error, NotificationType.Error);
+                _ = ShowToast(MainResources.VideoMetaDataToast_Error, NotificationType.Error);
 
                 await ShowErrorDialog(ex);
             }
@@ -102,11 +102,11 @@ namespace Harmonia.ViewModels
                     await HandleDownload(downloadItem);
                 }));
 
-                await ShowToast(MainResources.DownloadCompleteToast_Success, NotificationType.Success);
+                _ = ShowToast(MainResources.DownloadCompleteToast_Success, NotificationType.Success);
             }
             catch (Exception ex)
             {
-                await ShowToast(MainResources.DownloadCompleteToast_Error, NotificationType.Error);
+                _ = ShowToast(MainResources.DownloadCompleteToast_Error, NotificationType.Error);
 
                 await ShowErrorDialog(ex);
             }
@@ -153,7 +153,7 @@ namespace Harmonia.ViewModels
             }
             catch (Exception ex)
             {
-                await ShowToast(MainResources.Update_Error, NotificationType.Error);
+                _ = ShowToast(MainResources.Update_Error, NotificationType.Error);
 
                 await ShowErrorDialog(ex);
             }
