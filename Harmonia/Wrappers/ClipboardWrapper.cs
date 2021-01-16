@@ -1,6 +1,7 @@
 ﻿using System;
 using Harmonia.Wrappers.Interfaces;
 using WK.Libraries.SharpClipboardNS;
+using static WK.Libraries.SharpClipboardNS.SharpClipboard;
 
 namespace Harmonia.Wrappers
 {
@@ -15,9 +16,9 @@ namespace Harmonia.Wrappers
             _clipboard.ClipboardChanged += Clipboard_ClipboardChanged;
         }
 
-        private void Clipboard_ClipboardChanged(object sender, SharpClipboard.ClipboardChangedEventArgs e)
+        private void Clipboard_ClipboardChanged(object sender, ClipboardChangedEventArgs e)
         {
-            if (e.ContentType == SharpClipboard.ContentTypes.Text)
+            if (e.ContentType is ContentTypes.Text)
             {
                 ClipboardTextChanged?.Invoke(this, _clipboard.ClipboardText);
             }

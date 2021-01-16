@@ -30,7 +30,7 @@ namespace Harmonia.Views
             using (folderBrowserDialog)
             {
                 var result = folderBrowserDialog.ShowDialog();
-                if (result == OK)
+                if (result is OK)
                 {
                     _viewModel.OutputDirectory = folderBrowserDialog.SelectedPath;
                 }
@@ -49,7 +49,7 @@ namespace Harmonia.Views
             using (openFileDialog)
             {
                 var result = openFileDialog.ShowDialog();
-                if (result == OK)
+                if (result is OK)
                 {
                     _viewModel.Mp3GainPath = openFileDialog.FileName;
                 }

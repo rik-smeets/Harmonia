@@ -380,7 +380,7 @@ namespace Harmonia.UnitTests.ViewModels
                .Returns(Task.CompletedTask);
         }
 
-        private void ValidateFailedDownload(DownloadItem downloadItem)
+        private static void ValidateFailedDownload(DownloadItem downloadItem)
         {
             downloadItem.IsRunning.ShouldBeFalse();
             downloadItem.Status.ShouldBe(MainResources.Failed);
@@ -388,7 +388,7 @@ namespace Harmonia.UnitTests.ViewModels
             downloadItem.Completion.ShouldBe(100);
         }
 
-        private Video CreateVideo(string title = "Artist - Title")
+        private static Video CreateVideo(string title = "Artist - Title")
             => new Video(default, title, "Artist", default, DateTime.Now, "Description", default, default, default, default);
     }
 }

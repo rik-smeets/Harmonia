@@ -77,7 +77,7 @@ namespace Harmonia.Views
                        AnimateShow = true
                    });
 
-                if (result == MessageDialogResult.Affirmative)
+                if (result is MessageDialogResult.Affirmative)
                 {
                     ShowDialogWindow<SettingsWindow>();
                 }
@@ -151,7 +151,25 @@ namespace Harmonia.Views
             DeleteItemsOnCtrlDeletePress(e, dataGrid);
         }
 
-        private void BindArtistAndTitleOnTextChange(DataGrid datagrid)
+        private void DeleteItemsOnCtrlDeletePress(KeyEventArgs e, DataGrid dataGrid)
+        {
+            if (e.Key != Key.Delete || !Keyboard.IsKeyDown(Key.LeftCtrl) && !Keyboard.IsKeyDown(Key.RightCtrl))
+            {
+                return;
+            }
+
+            var selectedDownloadItems = dataGrid.SelectedCells
+                .Select(sc => sc.Item)
+                .OfType<DownloadItem>()
+                .ToArray();
+
+            foreach (var downloadItem in selectedDownloadItems)
+            {
+                _viewModel.DeleteDownloadItem(downloadItem);
+            }
+        }
+
+        private static void BindArtistAndTitleOnTextChange(DataGrid datagrid)
         {
             var selectedCells = datagrid.SelectedCells;
             if (selectedCells.Count != 1)
@@ -161,8 +179,8 @@ namespace Harmonia.Views
 
             var selectedCell = selectedCells[0];
             if (!selectedCell.IsValid ||
-                !(selectedCell.Column is DataGridTextColumn dgTextColumn) ||
-                !(dgTextColumn.Binding is Binding binding))
+                selectedCell.Column is not DataGridTextColumn dgTextColumn ||
+                dgTextColumn.Binding is not Binding binding)
             {
                 return;
             }
@@ -181,24 +199,6 @@ namespace Harmonia.Views
                         downloadItem.Title = textBox.Text;
                         break;
                 }
-            }
-        }
-
-        private void DeleteItemsOnCtrlDeletePress(KeyEventArgs e, DataGrid dataGrid)
-        {
-            if (e.Key != Key.Delete || !Keyboard.IsKeyDown(Key.LeftCtrl) && !Keyboard.IsKeyDown(Key.RightCtrl))
-            {
-                return;
-            }
-
-            var selectedDownloadItems = dataGrid.SelectedCells
-                .Select(sc => sc.Item)
-                .OfType<DownloadItem>()
-                .ToArray();
-
-            foreach (var downloadItem in selectedDownloadItems)
-            {
-                _viewModel.DeleteDownloadItem(downloadItem);
             }
         }
     }

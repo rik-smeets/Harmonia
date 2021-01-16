@@ -93,7 +93,7 @@ namespace Harmonia.ViewModels
                    AnimateHide = false
                });
 
-            if (result == MessageDialogResult.Affirmative)
+            if (result is MessageDialogResult.Affirmative)
             {
                 _processWrapper.Start("http://mp3gain.sourceforge.net/");
             }
@@ -110,7 +110,7 @@ namespace Harmonia.ViewModels
             }
         }
 
-        public bool IsLightThemeEnabled => _settingsProvider.ThemeBaseColor == ThemeManager.BaseColorLightConst;
-        public bool IsDarkThemeEnabled => _settingsProvider.ThemeBaseColor == ThemeManager.BaseColorDarkConst;
+        public bool IsLightThemeEnabled => _settingsProvider.ThemeBaseColor is ThemeManager.BaseColorLightConst;
+        public bool IsDarkThemeEnabled => _settingsProvider.ThemeBaseColor is ThemeManager.BaseColorDarkConst;
     }
 }

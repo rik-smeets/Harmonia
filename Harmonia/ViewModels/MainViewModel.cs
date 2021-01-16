@@ -135,7 +135,7 @@ namespace Harmonia.ViewModels
                         AnimateHide = false
                     });
 
-                if (result == MessageDialogResult.Affirmative)
+                if (result is MessageDialogResult.Affirmative)
                 {
                     var progressDialog = await _dialogCoordinator.ShowProgressAsync(
                         this,

@@ -45,7 +45,7 @@ Harmonia is built using the following dependencies:
 - [MahApps.Metro](https://github.com/MahApps/MahApps.Metro)
 - [MSTest V2](https://github.com/microsoft/testfx)
 - [Moq4](https://github.com/moq/moq4)
-- [Notifications.Wpf](https://github.com/mjuen/Notifications.Wpf.Core)
+- [Notifications.Wpf.Core](https://github.com/mjuen/Notifications.Wpf.Core)
 - [Onova](https://github.com/Tyrrrz/Onova)
 - [PropertyChanged.Fody](https://github.com/Fody/PropertyChanged)
 - [SharpClipboard](https://github.com/Willy-Kimura/SharpClipboard)
