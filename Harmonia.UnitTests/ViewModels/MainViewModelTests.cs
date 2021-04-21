@@ -7,7 +7,6 @@ using Harmonia.ViewModels;
 using MahApps.Metro.Controls.Dialogs;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
-using Notifications.Wpf;
 using Notifications.Wpf.Core;
 using Shouldly;
 using YoutubeExplode.Exceptions;
@@ -389,6 +388,6 @@ namespace Harmonia.UnitTests.ViewModels
         }
 
         private static Video CreateVideo(string title = "Artist - Title")
-            => new Video(default, title, "Artist", default, DateTime.Now, "Description", default, default, default, default);
+            => new(default, title, default, default, "Description", default, default, default, default);
     }
 }

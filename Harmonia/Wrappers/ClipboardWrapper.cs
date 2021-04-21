@@ -9,7 +9,7 @@ namespace Harmonia.Wrappers
     {
         public event EventHandler<string> ClipboardTextChanged;
 
-        private readonly SharpClipboard _clipboard = new SharpClipboard();
+        private readonly SharpClipboard _clipboard = new();
 
         public ClipboardWrapper()
         {

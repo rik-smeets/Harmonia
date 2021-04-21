@@ -12,11 +12,11 @@ namespace Harmonia.Services
 {
     public class YouTubeDownloadService : IYouTubeDownloadService
     {
-        private readonly YoutubeClient _youTubeClient = new YoutubeClient();
+        private readonly YoutubeClient _youTubeClient = new();
         private readonly ISettingsProvider _settingsProvider;
 
         private static readonly Regex IllegalFileNameRegex =
-            new Regex($"[{Regex.Escape(new string(Path.GetInvalidFileNameChars()) + new string(Path.GetInvalidPathChars()))}]");
+            new($"[{Regex.Escape(new string(Path.GetInvalidFileNameChars()) + new string(Path.GetInvalidPathChars()))}]");
 
         public YouTubeDownloadService(ISettingsProvider settingsProvider)
         {
@@ -32,9 +32,9 @@ namespace Harmonia.Services
             var streamManifest = await _youTubeClient.Videos.Streams.GetManifestAsync(video.Id);
 
             var streamInfo = streamManifest
-                .GetAudioOnly()
+                .GetAudioOnlyStreams()
                 .Where(s => s.Container == Container.Mp4)
-                .WithHighestBitrate();
+                .GetWithHighestBitrate();
 
             var fileExtension = streamInfo.Container.Name;
             var fileName = $"{requestedFileName}.{fileExtension}";

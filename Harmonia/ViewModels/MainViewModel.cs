@@ -13,8 +13,8 @@ namespace Harmonia.ViewModels
 {
     public class MainViewModel
     {
-        private readonly ObservableCollection<DownloadItem> _downloadItems = new ObservableCollection<DownloadItem>();
-        private readonly Regex YouTubeUrlRegex = new Regex(@"youtu(?:\.be|be\.com)/(?:.*v(?:/|=)|(?:.*/)?)([a-zA-Z0-9-_]{11})+");
+        private readonly ObservableCollection<DownloadItem> _downloadItems = new();
+        private readonly Regex YouTubeUrlRegex = new(@"youtu(?:\.be|be\.com)/(?:.*v(?:/|=)|(?:.*/)?)([a-zA-Z0-9-_]{11})+");
         private readonly IYouTubeDownloadService _youTubeDownloadService;
         private readonly IDialogCoordinator _dialogCoordinator;
         private readonly IConversionService _conversionService;

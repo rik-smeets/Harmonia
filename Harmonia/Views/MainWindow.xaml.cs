@@ -105,7 +105,7 @@ namespace Harmonia.Views
             }
             else
             {
-                Process.Start(_settingsProvider.OutputDirectory);
+                Process.Start("explorer.exe", _settingsProvider.OutputDirectory);
             }
         }
 
