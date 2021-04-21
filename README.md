@@ -8,7 +8,7 @@ Harmonia is a Windows desktop application, providing a user friendly way to extr
 - Supports all YouTube videos
 - Normalizes audio, so the volume is the same across all downloads
 - Sets the file name and MP3 tags consistently
-- Shows a toast message notifying your downloads are complete (if supported the version of Windows you're running)
+- Shows progress in application's task bar entry
 - Supports multiple downloads at once (and when downloading, you can keep adding/starting new downloads)
 - With auto update functionality
 
@@ -45,7 +45,6 @@ Harmonia is built using the following dependencies:
 - [MahApps.Metro](https://github.com/MahApps/MahApps.Metro)
 - [MSTest V2](https://github.com/microsoft/testfx)
 - [Moq4](https://github.com/moq/moq4)
-- [Notifications.Wpf.Core](https://github.com/mjuen/Notifications.Wpf.Core)
 - [Onova](https://github.com/Tyrrrz/Onova)
 - [PropertyChanged.Fody](https://github.com/Fody/PropertyChanged)
 - [SharpClipboard](https://github.com/Willy-Kimura/SharpClipboard)

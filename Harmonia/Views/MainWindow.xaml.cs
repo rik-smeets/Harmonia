@@ -6,6 +6,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
+using System.Windows.Shell;
 using Harmonia.Models;
 using Harmonia.Properties;
 using Harmonia.Settings.Interfaces;
@@ -92,6 +93,12 @@ namespace Harmonia.Views
                         });
                 }
             }
+
+            _viewModel.DownloadProgress += (o, downloadProgressArgs) =>
+            {
+                TaskbarItemInfo.ProgressState = downloadProgressArgs.State;
+                TaskbarItemInfo.ProgressValue = downloadProgressArgs.Value;
+            };
 
             await _viewModel.StartDownloads();
         }

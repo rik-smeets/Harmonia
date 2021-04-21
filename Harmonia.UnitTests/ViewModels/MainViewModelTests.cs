@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
+using System.Windows.Shell;
 using Harmonia.Models;
 using Harmonia.Properties;
 using Harmonia.Services.Interfaces;
@@ -7,7 +9,6 @@ using Harmonia.ViewModels;
 using MahApps.Metro.Controls.Dialogs;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
-using Notifications.Wpf.Core;
 using Shouldly;
 using YoutubeExplode.Exceptions;
 using YoutubeExplode.Videos;
@@ -23,7 +24,6 @@ namespace Harmonia.UnitTests.ViewModels
         private Mock<IConversionService> _conversionServiceMock;
         private Mock<IMp3TagService> _mp3TagServiceMock;
         private Mock<IAudioNormalizerService> _audioNormalizerServiceMock;
-        private Mock<INotificationManager> _notificationManagerMock;
         private Mock<IAutoUpdateService> _autoUpdateServiceMock;
         private MainViewModel _mainViewModel;
         private const string ValidVideoId = "dQw4w9WgXcQ";
@@ -39,7 +39,6 @@ namespace Harmonia.UnitTests.ViewModels
             _conversionServiceMock = _mockRepository.Create<IConversionService>();
             _mp3TagServiceMock = _mockRepository.Create<IMp3TagService>();
             _audioNormalizerServiceMock = _mockRepository.Create<IAudioNormalizerService>();
-            _notificationManagerMock = _mockRepository.Create<INotificationManager>();
             _autoUpdateServiceMock = _mockRepository.Create<IAutoUpdateService>();
 
             _mainViewModel = new MainViewModel(
@@ -48,7 +47,6 @@ namespace Harmonia.UnitTests.ViewModels
                 _conversionServiceMock.Object,
                 _mp3TagServiceMock.Object,
                 _audioNormalizerServiceMock.Object,
-                _notificationManagerMock.Object,
                 _autoUpdateServiceMock.Object);
         }
 
@@ -153,7 +151,7 @@ namespace Harmonia.UnitTests.ViewModels
         }
 
         [TestMethod]
-        public async Task AddDownloadItem_WhenGettingVideoInfoFails_ThenThrowsExceptionSetsDownloadItemToFailedAndShowsDialogAndToast()
+        public async Task AddDownloadItem_WhenGettingVideoInfoFails_ThenThrowsExceptionSetsDownloadItemToFailedAndShowsDialog()
         {
             var expectedMessage = "Some error";
 
@@ -162,7 +160,6 @@ namespace Harmonia.UnitTests.ViewModels
                 .Throws(new VideoUnavailableException(expectedMessage));
 
             SetupErrorDialogMock(expectedMessage);
-            SetupNotificationManagerMock(MainResources.VideoMetaDataToast_Error, NotificationType.Error);
 
             await _mainViewModel.AddDownloadItem(ValidYouTubeUrl);
 
@@ -172,33 +169,19 @@ namespace Harmonia.UnitTests.ViewModels
         }
 
         [TestMethod]
-        public async Task StartDownloads_WhenCalled_ThenPerformsAllConversionStepsFinishesDownloadItemAndShowsToast()
+        public async Task StartDownloads_WhenCalled_ThenPerformsAllConversionStepsFinishesDownloadItemAndUpdatesProgress()
         {
             var downloadItem = new DownloadItem(ValidVideoId);
             _mainViewModel.AddDownloadItem(downloadItem);
 
             var videoInfo = CreateVideo();
-            _youTubeDownloadServiceMock
-                .Setup(m => m.GetVideo(downloadItem.YouTubeId))
-                .ReturnsAsync(videoInfo);
+            SetupDownloadItemMocks(downloadItem, videoInfo);
 
-            var mp4Path = @"C:\Temp\test.mp4";
-            _youTubeDownloadServiceMock
-                .Setup(m => m.DownloadMp4AndGetPath(videoInfo, $"{downloadItem.Artist} - {downloadItem.Title}"))
-                .ReturnsAsync(mp4Path);
-
-            var mp3Path = @"C:\Temp\test.mp3";
-            _conversionServiceMock
-                .Setup(m => m.ConvertMp4ToMp3AndGetMp3Path(mp4Path))
-                .ReturnsAsync(mp3Path);
-
-            _audioNormalizerServiceMock
-                .Setup(m => m.NormalizeAudio(mp3Path));
-
-            _mp3TagServiceMock
-                .Setup(m => m.SetMp3Tags(mp3Path, downloadItem.Artist, downloadItem.Title));
-
-            SetupNotificationManagerMock(MainResources.DownloadCompleteToast_Success, NotificationType.Success);
+            var downloadProgressEvents = new List<DownloadProgressEventArgs>();
+            _mainViewModel.DownloadProgress += (s, args) =>
+            {
+                downloadProgressEvents.Add(args);
+            };
 
             await _mainViewModel.StartDownloads();
 
@@ -206,6 +189,12 @@ namespace Harmonia.UnitTests.ViewModels
             downloadItem.IsCompleted.ShouldBe(true);
             downloadItem.IsRunning.ShouldBe(false);
             downloadItem.Status.ShouldBe(MainResources.Completed);
+
+            downloadProgressEvents.Count.ShouldBe(2);
+            downloadProgressEvents[0].State.ShouldBe(TaskbarItemProgressState.Indeterminate);
+
+            downloadProgressEvents[1].State.ShouldBe(TaskbarItemProgressState.Normal);
+            downloadProgressEvents[1].Value.ShouldBe(1);
         }
 
         [TestMethod]
@@ -235,7 +224,7 @@ namespace Harmonia.UnitTests.ViewModels
         }
 
         [TestMethod]
-        public async Task StartDownloads_WhenCalledButDownloadFails_ThenShowsDialogAndToast()
+        public async Task StartDownloads_WhenCalledButDownloadFails_ThenShowsDialogAndUpdatesDownloadProgress()
         {
             var expectedMessage = "Some error";
 
@@ -246,13 +235,19 @@ namespace Harmonia.UnitTests.ViewModels
                 .Setup(m => m.GetVideo(downloadItem.YouTubeId))
                 .Throws(new VideoUnavailableException(expectedMessage));
 
-            SetupNotificationManagerMock(MainResources.DownloadCompleteToast_Error, NotificationType.Error);
-
             SetupErrorDialogMock(expectedMessage);
+
+            var downloadProgressEvents = new List<DownloadProgressEventArgs>();
+            _mainViewModel.DownloadProgress += (s, args) =>
+            {
+                downloadProgressEvents.Add(args);
+            };
 
             await _mainViewModel.StartDownloads();
 
             ValidateFailedDownload(downloadItem);
+            downloadProgressEvents.Count.ShouldBe(2);
+            downloadProgressEvents[1].State.ShouldBe(TaskbarItemProgressState.Error);
         }
 
         [TestMethod]
@@ -310,7 +305,7 @@ namespace Harmonia.UnitTests.ViewModels
         }
 
         [TestMethod]
-        public async Task PerformUpdateAsync_WhenCalledButExceptionsOccurs_ThenToastAndDialogAreShown()
+        public async Task PerformUpdateAsync_WhenCalledButExceptionsOccurs_ThenDialogIsShown()
         {
             var expectedMessage = "Some error";
 
@@ -319,13 +314,12 @@ namespace Harmonia.UnitTests.ViewModels
                 .Throws(new Exception(expectedMessage));
 
             SetupErrorDialogMock(expectedMessage);
-            SetupNotificationManagerMock(MainResources.Update_Error, NotificationType.Error);
 
             await _mainViewModel.PerformUpdateAsync();
         }
 
         [TestMethod]
-        public void DeleteDownloadItem_WhenCalled_ThemRemovesDownloadItem()
+        public void DeleteDownloadItem_WhenCalled_ThenRemovesDownloadItem()
         {
             var downloadItem = new DownloadItem(ValidVideoId);
 
@@ -334,6 +328,29 @@ namespace Harmonia.UnitTests.ViewModels
 
             _mainViewModel.DeleteDownloadItem(downloadItem);
             _mainViewModel.DownloadItems.ShouldBeEmpty();
+        }
+
+        private void SetupDownloadItemMocks(DownloadItem downloadItem, Video videoInfo)
+        {
+            _youTubeDownloadServiceMock
+                .Setup(m => m.GetVideo(downloadItem.YouTubeId))
+                .ReturnsAsync(videoInfo);
+
+            var mp4Path = @"C:\Temp\test.mp4";
+            _youTubeDownloadServiceMock
+                .Setup(m => m.DownloadMp4AndGetPath(videoInfo, $"{downloadItem.Artist} - {downloadItem.Title}"))
+                .ReturnsAsync(mp4Path);
+
+            var mp3Path = @"C:\Temp\test.mp3";
+            _conversionServiceMock
+                .Setup(m => m.ConvertMp4ToMp3AndGetMp3Path(mp4Path))
+                .ReturnsAsync(mp3Path);
+
+            _audioNormalizerServiceMock
+                .Setup(m => m.NormalizeAudio(mp3Path));
+
+            _mp3TagServiceMock
+                .Setup(m => m.SetMp3Tags(mp3Path, downloadItem.Artist, downloadItem.Title));
         }
 
         private void SetupUpdateAvailableDialog(MessageDialogResult messageDialogResult)
@@ -361,22 +378,6 @@ namespace Harmonia.UnitTests.ViewModels
                      MessageDialogStyle.Affirmative,
                      null))
                  .ReturnsAsync(MessageDialogResult.Affirmative);
-        }
-
-        private void SetupNotificationManagerMock(string expectedMessage, NotificationType notificationType)
-        {
-            _notificationManagerMock
-               .Setup(m => m.ShowAsync(
-                   It.Is<NotificationContent>(
-                       n => n.Title == CommonResources.Harmonia &&
-                       n.Message == expectedMessage &&
-                       n.Type == notificationType),
-                   default,
-                   TimeSpan.FromSeconds(10),
-                   default,
-                   default,
-                   default))
-               .Returns(Task.CompletedTask);
         }
 
         private static void ValidateFailedDownload(DownloadItem downloadItem)

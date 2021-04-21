@@ -133,24 +133,6 @@ namespace Harmonia.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Error occurred during download.
-        /// </summary>
-        public static string DownloadCompleteToast_Error {
-            get {
-                return ResourceManager.GetString("DownloadCompleteToast_Error", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Downloads finished.
-        /// </summary>
-        public static string DownloadCompleteToast_Success {
-            get {
-                return ResourceManager.GetString("DownloadCompleteToast_Success", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Failed.
         /// </summary>
         public static string Failed {

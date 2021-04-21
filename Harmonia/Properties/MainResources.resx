@@ -112,10 +112,10 @@
     <value>2.0</value>
   </resheader>
   <resheader name="reader">
-    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <resheader name="writer">
-    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Artist" xml:space="preserve">
     <value>Artist</value>
@@ -140,12 +140,6 @@
   </data>
   <data name="Delete" xml:space="preserve">
     <value>Delete</value>
-  </data>
-  <data name="DownloadCompleteToast_Error" xml:space="preserve">
-    <value>Error occurred during download</value>
-  </data>
-  <data name="DownloadCompleteToast_Success" xml:space="preserve">
-    <value>Downloads finished</value>
   </data>
   <data name="Failed" xml:space="preserve">
     <value>Failed</value>

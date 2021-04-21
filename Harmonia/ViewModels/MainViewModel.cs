@@ -3,11 +3,11 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using System.Windows.Shell;
 using Harmonia.Models;
 using Harmonia.Properties;
 using Harmonia.Services.Interfaces;
 using MahApps.Metro.Controls.Dialogs;
-using Notifications.Wpf.Core;
 
 namespace Harmonia.ViewModels
 {
@@ -20,7 +20,6 @@ namespace Harmonia.ViewModels
         private readonly IConversionService _conversionService;
         private readonly IMp3TagService _mp3TagService;
         private readonly IAudioNormalizerService _audioNormalizerService;
-        private readonly INotificationManager _notificationManager;
         private readonly IAutoUpdateService _autoUpdateService;
 
         public MainViewModel(
@@ -29,7 +28,6 @@ namespace Harmonia.ViewModels
             IConversionService conversionService,
             IMp3TagService mp3TagService,
             IAudioNormalizerService audioNormalizerService,
-            INotificationManager notificationManager,
             IAutoUpdateService autoUpdateService)
         {
             _youTubeDownloadService = youTubeDownloadService;
@@ -37,13 +35,14 @@ namespace Harmonia.ViewModels
             _conversionService = conversionService;
             _mp3TagService = mp3TagService;
             _audioNormalizerService = audioNormalizerService;
-            _notificationManager = notificationManager;
             _autoUpdateService = autoUpdateService;
 
             DownloadItems = new ReadOnlyObservableCollection<DownloadItem>(_downloadItems);
         }
 
         public ReadOnlyObservableCollection<DownloadItem> DownloadItems { get; }
+
+        public event EventHandler<DownloadProgressEventArgs> DownloadProgress;
 
         public void AddDownloadItem(DownloadItem downloadItem) => _downloadItems.Add(downloadItem);
 
@@ -79,8 +78,6 @@ namespace Harmonia.ViewModels
             {
                 downloadItem.SetFailed();
 
-                _ = ShowToast(MainResources.VideoMetaDataToast_Error, NotificationType.Error);
-
                 await ShowErrorDialog(ex);
             }
         }
@@ -92,21 +89,28 @@ namespace Harmonia.ViewModels
                 .ToArray();
             if (!newDownloads.Any())
             {
+                InvokeDownloadProgressEvent(TaskbarItemProgressState.Normal);
+
                 return;
             };
+
+            InvokeDownloadProgressEvent(TaskbarItemProgressState.Indeterminate);
 
             try
             {
                 await Task.WhenAll(newDownloads.Select(async downloadItem =>
                 {
                     await HandleDownload(downloadItem);
-                }));
 
-                _ = ShowToast(MainResources.DownloadCompleteToast_Success, NotificationType.Success);
+                    InvokeDownloadProgressEvent(
+                        TaskbarItemProgressState.Normal,
+                        DownloadItems.Count,
+                        DownloadItems.Where(di => di.IsCompleted).Count());
+                }));
             }
             catch (Exception ex)
             {
-                _ = ShowToast(MainResources.DownloadCompleteToast_Error, NotificationType.Error);
+                InvokeDownloadProgressEvent(TaskbarItemProgressState.Error);
 
                 await ShowErrorDialog(ex);
             }
@@ -153,8 +157,6 @@ namespace Harmonia.ViewModels
             }
             catch (Exception ex)
             {
-                _ = ShowToast(MainResources.Update_Error, NotificationType.Error);
-
                 await ShowErrorDialog(ex);
             }
         }
@@ -208,15 +210,16 @@ namespace Harmonia.ViewModels
                 message: string.Format(CommonResources.ErrorOccurredMessage, ex.Message));
         }
 
-        private async Task ShowToast(string message, NotificationType notificationType)
+        private void InvokeDownloadProgressEvent(TaskbarItemProgressState state) => InvokeDownloadProgressEvent(state, default, default);
+
+        private void InvokeDownloadProgressEvent(TaskbarItemProgressState state, double totalItems, int finishedItems)
         {
-            await _notificationManager.ShowAsync(
-                new NotificationContent
-                {
-                    Title = CommonResources.Harmonia,
-                    Message = message,
-                    Type = notificationType
-                }, expirationTime: TimeSpan.FromSeconds(10));
+            DownloadProgress?.Invoke(this, new DownloadProgressEventArgs
+            {
+                State = state,
+                TotalItems = totalItems,
+                FinishedItems = finishedItems,
+            });
         }
     }
 }
