@@ -139,21 +139,23 @@ namespace Harmonia.ViewModels
                         AnimateHide = false
                     });
 
-                if (result is MessageDialogResult.Affirmative)
+                if (result is not MessageDialogResult.Affirmative)
                 {
-                    var progressDialog = await _dialogCoordinator.ShowProgressAsync(
-                        this,
-                        MainResources.Updating_Title,
-                        MainResources.Updating_Message,
-                        isCancelable: false,
-                        settings: new MetroDialogSettings
-                        {
-                            AnimateHide = false,
-                            AnimateShow = false
-                        });
-
-                    await _autoUpdateService.PerformUpdateAsync(progressDialog);
+                    return;
                 }
+
+                var progressDialog = await _dialogCoordinator.ShowProgressAsync(
+                    this,
+                    MainResources.Updating_Title,
+                    MainResources.Updating_Message,
+                    isCancelable: false,
+                    settings: new MetroDialogSettings
+                    {
+                        AnimateHide = false,
+                        AnimateShow = false
+                    });
+
+                await _autoUpdateService.PerformUpdateAsync(progressDialog);
             }
             catch (Exception ex)
             {
