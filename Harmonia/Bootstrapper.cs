@@ -1,4 +1,6 @@
-﻿using Harmonia.Services;
+﻿using System.Diagnostics;
+using System.Reflection;
+using Harmonia.Services;
 using Harmonia.Services.Interfaces;
 using Harmonia.Settings;
 using Harmonia.Settings.Interfaces;
@@ -6,6 +8,7 @@ using Harmonia.Wrappers;
 using Harmonia.Wrappers.Interfaces;
 using MahApps.Metro.Controls.Dialogs;
 using Onova;
+using Onova.Models;
 using Onova.Services;
 using Unity;
 
@@ -55,7 +58,12 @@ namespace Harmonia
 
         private static UpdateManager CreateUpdateManager()
         {
+            var entryAssembly = Assembly.GetEntryAssembly();
+            var executablePath = Process.GetCurrentProcess().MainModule.FileName;
+            var assemblyMetaData = AssemblyMetadata.FromAssembly(entryAssembly, executablePath);
+
             return new UpdateManager(
+                assemblyMetaData,
                 new GithubPackageResolver("rik-smeets", "Harmonia", "*.zip"),
                 new ZipPackageExtractor());
         }
