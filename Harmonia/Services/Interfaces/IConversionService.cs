@@ -1,6 +1,4 @@
-﻿using System.Threading.Tasks;
-
-namespace Harmonia.Services.Interfaces
+﻿namespace Harmonia.Services.Interfaces
 {
     public interface IConversionService
     {

@@ -1,5 +1,4 @@
-﻿using System.Threading.Tasks;
-using MahApps.Metro.Controls.Dialogs;
+﻿using MahApps.Metro.Controls.Dialogs;
 
 namespace Harmonia.Services.Interfaces
 {

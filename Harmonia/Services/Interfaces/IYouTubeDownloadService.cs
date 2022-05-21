@@ -1,5 +1,4 @@
-﻿using System.Threading.Tasks;
-using YoutubeExplode.Videos;
+﻿using YoutubeExplode.Videos;
 
 namespace Harmonia.Services.Interfaces
 {

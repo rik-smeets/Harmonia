@@ -1,6 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
-using Harmonia.Services.Interfaces;
+﻿using Harmonia.Services.Interfaces;
 using MahApps.Metro.Controls.Dialogs;
 using Onova;
 

@@ -1,6 +1,5 @@
 ﻿using System.Diagnostics;
 using System.IO;
-using System.Threading.Tasks;
 using Harmonia.Services.Interfaces;
 using Xabe.FFmpeg;
 using Xabe.FFmpeg.Downloader;

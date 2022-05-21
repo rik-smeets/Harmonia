@@ -1,6 +1,4 @@
-﻿using System.Linq;
-using System.Threading.Tasks;
-using Harmonia.Properties;
+﻿using Harmonia.Properties;
 using Harmonia.Settings;
 using Harmonia.Settings.Interfaces;
 using Harmonia.ViewModels;

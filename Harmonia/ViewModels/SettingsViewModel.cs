@@ -1,7 +1,4 @@
-﻿using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.ComponentModel;
 using ControlzEx.Theming;
 using Harmonia.Properties;
 using Harmonia.Settings;

@@ -1,7 +1,5 @@
 ﻿using System.IO;
-using System.Linq;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using Harmonia.Services.Interfaces;
 using Harmonia.Settings;
 using Harmonia.Settings.Interfaces;

@@ -1,5 +1,4 @@
-﻿using System;
-using Harmonia.Wrappers.Interfaces;
+﻿using Harmonia.Wrappers.Interfaces;
 using WK.Libraries.SharpClipboardNS;
 using static WK.Libraries.SharpClipboardNS.SharpClipboard;
 

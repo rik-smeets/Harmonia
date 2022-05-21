@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Harmonia.Wrappers.Interfaces
+﻿namespace Harmonia.Wrappers.Interfaces
 {
     public interface IClipboardWrapper
     {

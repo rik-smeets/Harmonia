@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using System.Windows.Shell;
+﻿using System.Windows.Shell;
 using Harmonia.Models;
 using Harmonia.Properties;
 using Harmonia.Services.Interfaces;

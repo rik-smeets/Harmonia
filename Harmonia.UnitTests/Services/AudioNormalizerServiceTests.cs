@@ -1,5 +1,4 @@
 ﻿using System.Diagnostics;
-using System.IO;
 using Harmonia.Services;
 using Harmonia.Settings;
 using Harmonia.Settings.Interfaces;
