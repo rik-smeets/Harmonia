@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
 using Harmonia.Properties;
+using Harmonia.Settings;
 using Harmonia.Settings.Interfaces;
 using Harmonia.ViewModels;
 using Harmonia.Wrappers.Interfaces;
@@ -14,11 +15,13 @@ namespace Harmonia.UnitTests.ViewModels
     [TestClass]
     public class SettingsViewModelTests
     {
+        private readonly UserSettings _userSettings = new() { Mp3GainPath = "mp3gain.exe" };
         private MockRepository _mockRepository;
-        private Mock<ISettingsProvider> _settingsProviderMock;
+        private Mock<ISettingsManager> _settingsManagerMock;
         private Mock<IDialogCoordinator> _dialogCoordinatorMock;
         private Mock<IProcessWrapper> _processWrapperMock;
         private Mock<IThemeManagerWrapper> _themeManagerWrapperMock;
+        private Mock<IStorageWrapper> _storageWrapperMock;
         private SettingsViewModel _settingsViewModel;
 
         [TestInitialize]
@@ -26,16 +29,19 @@ namespace Harmonia.UnitTests.ViewModels
         {
             _mockRepository = new MockRepository(MockBehavior.Strict);
 
-            _settingsProviderMock = _mockRepository.Create<ISettingsProvider>();
+            _settingsManagerMock = _mockRepository.Create<ISettingsManager>();
+            _settingsManagerMock.Setup(m => m.LoadSettings()).Returns(_userSettings);
             _dialogCoordinatorMock = _mockRepository.Create<IDialogCoordinator>();
             _processWrapperMock = _mockRepository.Create<IProcessWrapper>();
             _themeManagerWrapperMock = _mockRepository.Create<IThemeManagerWrapper>();
+            _storageWrapperMock = _mockRepository.Create<IStorageWrapper>();
 
             _settingsViewModel = new SettingsViewModel(
-                _settingsProviderMock.Object,
+                _settingsManagerMock.Object,
                 _dialogCoordinatorMock.Object,
                 _processWrapperMock.Object,
-                _themeManagerWrapperMock.Object);
+                _themeManagerWrapperMock.Object,
+                _storageWrapperMock.Object);
         }
 
         [TestCleanup]
@@ -49,10 +55,7 @@ namespace Harmonia.UnitTests.ViewModels
         public void OutputDirectory_WhenGetIsCalled_ThenReturnsSettingsProviderValue()
         {
             const string expectedOutputDirectory = @"C:\Temp";
-
-            _settingsProviderMock
-                .Setup(s => s.OutputDirectory)
-                .Returns(expectedOutputDirectory);
+            _userSettings.OutputDirectory = expectedOutputDirectory;
 
             var result = _settingsViewModel.OutputDirectory;
 
@@ -62,29 +65,22 @@ namespace Harmonia.UnitTests.ViewModels
         [TestMethod]
         public void OutputDirectory_WhenSetIsCalled_ThenSetsValueOnSettingsProvider()
         {
+            _settingsManagerMock.Setup(x => x.SaveSettings(_userSettings));
+
             const string expectedOutputDirectory = @"C:\Temp";
-
-            _settingsProviderMock
-                .Setup(s => s.OutputDirectory)
-                .Returns(string.Empty);
-            _settingsProviderMock
-                .SetupSet(s => s.OutputDirectory = expectedOutputDirectory)
-                .Verifiable();
-
             _settingsViewModel.OutputDirectory = expectedOutputDirectory;
+
+            _userSettings.OutputDirectory.ShouldBe(expectedOutputDirectory);
         }
 
         [TestMethod]
         public void Mp3GainPath_WhenGetIsCalled_ThenReturnsSettingsProviderValue()
         {
             const string expectedPath = @"C:\Temp\mp3gain.exe";
-
-            _settingsProviderMock
-                .Setup(s => s.Mp3GainPath)
-                .Returns(expectedPath);
+            _userSettings.Mp3GainPath = expectedPath;
 
             var result = _settingsViewModel.Mp3GainPath;
-
+            
             result.ShouldBe(expectedPath);
         }
 
@@ -92,15 +88,11 @@ namespace Harmonia.UnitTests.ViewModels
         public void Mp3GainPath_WhenSetIsCalled_ThenSetsValueOnSettingsProvider()
         {
             const string expectedMp3GainPath = @"C:\Temp\mp3gain.exe";
-
-            _settingsProviderMock
-                .Setup(s => s.Mp3GainPath)
-                .Returns(string.Empty);
-            _settingsProviderMock
-                .SetupSet(s => s.Mp3GainPath = expectedMp3GainPath)
-                .Verifiable();
+            _settingsManagerMock.Setup(x => x.SaveSettings(_userSettings));
 
             _settingsViewModel.Mp3GainPath = expectedMp3GainPath;
+
+            _userSettings.Mp3GainPath.ShouldBe(expectedMp3GainPath);
         }
 
         [TestMethod]
@@ -115,7 +107,7 @@ namespace Harmonia.UnitTests.ViewModels
                     null))
                 .ReturnsAsync(MessageDialogResult.Affirmative);
 
-            _settingsProviderMock.Setup(s => s.IsMp3GainPathValid())
+            _storageWrapperMock.Setup(s => s.FileExists(_userSettings.Mp3GainPath))
                 .Returns(true);
 
             await _settingsViewModel.ShowMp3GainHelp();
@@ -124,8 +116,7 @@ namespace Harmonia.UnitTests.ViewModels
         [TestMethod]
         public async Task ShowMp3GainHelp_WhenPathIsInvalidAndUserChoosesAffirmative_ThenOpensMp3GainSite()
         {
-            _settingsProviderMock
-                .Setup(s => s.IsMp3GainPathValid())
+            _storageWrapperMock.Setup(s => s.FileExists(_userSettings.Mp3GainPath))
                 .Returns(false);
 
             _dialogCoordinatorMock
@@ -151,8 +142,7 @@ namespace Harmonia.UnitTests.ViewModels
         public async Task ShowMp3GainHelp_WhenPathIsInvalidAndUserDoesNotChooseAffirmative_ThenShowsTwoMessages(
             MessageDialogResult dialogResult)
         {
-            _settingsProviderMock
-                .Setup(s => s.IsMp3GainPathValid())
+            _storageWrapperMock.Setup(s => s.FileExists(_userSettings.Mp3GainPath))
                 .Returns(false);
 
             _dialogCoordinatorMock
@@ -183,15 +173,13 @@ namespace Harmonia.UnitTests.ViewModels
         [TestMethod]
         public void SetThemeBaseColor_WhenCalled_ThenCallsThemeManagerWrapper()
         {
-            const string expectedTheme = "Dark";
+            const string expectedThemeBaseColor = "Dark";
 
             _themeManagerWrapperMock
-                .Setup(m => m.ChangeThemeBaseColor(expectedTheme));
+                .Setup(m => m.ChangeThemeBaseColor(expectedThemeBaseColor));
 
-            _settingsProviderMock
-                .SetupSet(m => m.ThemeBaseColor = expectedTheme);
-
-            _settingsViewModel.SetThemeBaseColor(expectedTheme);
+            _settingsViewModel.SetThemeBaseColor(expectedThemeBaseColor);
+            _userSettings.ThemeBaseColor.ShouldBe(expectedThemeBaseColor);
         }
 
         [DataTestMethod]
@@ -200,9 +188,7 @@ namespace Harmonia.UnitTests.ViewModels
         public void IsDarkThemeEnabled_WhenCalled_ThenReturnsBoolBasedOnSettingsProviderResult(
             string themeBaseColor, bool expectedResult)
         {
-            _settingsProviderMock
-                .Setup(m => m.ThemeBaseColor)
-                .Returns(themeBaseColor);
+            _userSettings.ThemeBaseColor = themeBaseColor;
 
             var result = _settingsViewModel.IsDarkThemeEnabled;
 
@@ -215,9 +201,7 @@ namespace Harmonia.UnitTests.ViewModels
         public void IsLightThemeEnabled_WhenCalled_ThenReturnsBoolBasedOnSettingsProviderResult(
             string themeBaseColor, bool expectedResult)
         {
-            _settingsProviderMock
-                .Setup(m => m.ThemeBaseColor)
-                .Returns(themeBaseColor);
+            _userSettings.ThemeBaseColor = themeBaseColor;
 
             var result = _settingsViewModel.IsLightThemeEnabled;
 
@@ -238,10 +222,7 @@ namespace Harmonia.UnitTests.ViewModels
         public void SelectedColorScheme_WhenGetIsCalled_ThenReturnsSettingsProviderValue()
         {
             var expectedColorScheme = ThemeResources.Cyan;
-
-            _settingsProviderMock
-                .Setup(s => s.ThemeColorScheme)
-                .Returns(expectedColorScheme);
+            _userSettings.ThemeColorScheme = expectedColorScheme;
 
             var result = _settingsViewModel.SelectedColorScheme;
 
@@ -251,18 +232,13 @@ namespace Harmonia.UnitTests.ViewModels
         [TestMethod]
         public void SelectedColorScheme_WhenSetIsCalled_ThenSetsValueOnSettingsProviderAndChangesColorScheme()
         {
+            _settingsManagerMock.Setup(x => x.SaveSettings(_userSettings));
             var expectedColorScheme = ThemeResources.Green;
-
-            _settingsProviderMock
-                .Setup(s => s.ThemeColorScheme)
-                .Returns(string.Empty);
-            _settingsProviderMock
-                .SetupSet(s => s.ThemeColorScheme = expectedColorScheme)
-                .Verifiable();
             _themeManagerWrapperMock
                 .Setup(m => m.ChangeThemeColorScheme(expectedColorScheme));
 
             _settingsViewModel.SelectedColorScheme = expectedColorScheme;
+            _userSettings.ThemeColorScheme.ShouldBe(expectedColorScheme);
         }
     }
 }

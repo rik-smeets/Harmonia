@@ -3,6 +3,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Harmonia.Services.Interfaces;
+using Harmonia.Settings;
 using Harmonia.Settings.Interfaces;
 using YoutubeExplode;
 using YoutubeExplode.Videos;
@@ -13,15 +14,14 @@ namespace Harmonia.Services
     public class YouTubeDownloadService : IYouTubeDownloadService
     {
         private readonly YoutubeClient _youTubeClient = new();
-        private readonly ISettingsProvider _settingsProvider;
-
+        private readonly UserSettings _userSettings;
         private static readonly Regex IllegalFileNameRegex =
             new($"[{Regex.Escape(new string(Path.GetInvalidFileNameChars()) + new string(Path.GetInvalidPathChars()))}]");
 
-        public YouTubeDownloadService(ISettingsProvider settingsProvider)
+        public YouTubeDownloadService(ISettingsManager settingsManager)
         {
             _youTubeClient = new YoutubeClient();
-            _settingsProvider = settingsProvider;
+            _userSettings = settingsManager.LoadSettings();
         }
 
         public async Task<Video> GetVideo(string youTubeId) =>
@@ -41,7 +41,7 @@ namespace Harmonia.Services
 
             var formattedFileName = IllegalFileNameRegex.Replace(fileName, string.Empty);
 
-            var outputDirectory = _settingsProvider.OutputDirectory;
+            var outputDirectory = _userSettings.OutputDirectory;
             var mp4Path = Path.Combine(outputDirectory, formattedFileName);
 
             await _youTubeClient.Videos.Streams.DownloadAsync(streamInfo, mp4Path);

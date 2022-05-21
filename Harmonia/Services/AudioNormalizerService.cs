@@ -1,6 +1,7 @@
 ﻿using System.Diagnostics;
 using System.IO;
 using Harmonia.Services.Interfaces;
+using Harmonia.Settings;
 using Harmonia.Settings.Interfaces;
 using Harmonia.Wrappers.Interfaces;
 
@@ -8,23 +9,23 @@ namespace Harmonia.Services
 {
     public class AudioNormalizerService : IAudioNormalizerService
     {
-        private readonly ISettingsProvider _settingsProvider;
+        private readonly UserSettings _userSettings;
         private readonly IProcessWrapper _processWrapper;
         private readonly IStorageWrapper _storageWrapper;
 
         public AudioNormalizerService(
-            ISettingsProvider settingsProvider,
+            ISettingsManager settingsManager,
             IProcessWrapper processWrapper,
             IStorageWrapper storageWrapper)
         {
-            _settingsProvider = settingsProvider;
+            _userSettings = settingsManager.LoadSettings();
             _processWrapper = processWrapper;
             _storageWrapper = storageWrapper;
         }
 
         public void NormalizeAudio(string mp3Path)
         {
-            if (!_settingsProvider.IsMp3GainPathValid())
+            if (!_storageWrapper.FileExists(_userSettings.Mp3GainPath))
             {
                 return;
             }
@@ -39,7 +40,7 @@ namespace Harmonia.Services
                 CreateNoWindow = true,
                 WindowStyle = ProcessWindowStyle.Hidden,
                 UseShellExecute = false,
-                FileName = _settingsProvider.Mp3GainPath,
+                FileName = _userSettings.Mp3GainPath,
                 Arguments = $"/r /k /c \"{mp3Path}\""
             };
 

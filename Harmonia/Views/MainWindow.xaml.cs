@@ -9,6 +9,7 @@ using System.Windows.Input;
 using System.Windows.Shell;
 using Harmonia.Models;
 using Harmonia.Properties;
+using Harmonia.Settings;
 using Harmonia.Settings.Interfaces;
 using Harmonia.ViewModels;
 using Harmonia.Wrappers.Interfaces;
@@ -20,23 +21,26 @@ namespace Harmonia.Views
 {
     public partial class MainWindow : MetroWindow
     {
-        private readonly ISettingsProvider _settingsProvider;
+        private readonly UserSettings _userSettings;
         private readonly IUnityContainer _unityContainer;
         private readonly MainViewModel _viewModel;
         private readonly IClipboardWrapper _clipboardWrapper;
+        private readonly IStorageWrapper _storageWrapper;
 
         public MainWindow(
-            ISettingsProvider settingsProvider,
+            ISettingsManager settingsManager,
             IUnityContainer unityContainer,
             MainViewModel mainViewModel,
-            IClipboardWrapper clipboardWrapper)
+            IClipboardWrapper clipboardWrapper,
+            IStorageWrapper storageWrapper)
         {
             InitializeComponent();
 
-            _settingsProvider = settingsProvider;
+            _userSettings = settingsManager.LoadSettings();
             _unityContainer = unityContainer;
             _viewModel = mainViewModel;
             _clipboardWrapper = clipboardWrapper;
+            _storageWrapper = storageWrapper;
             DataContext = mainViewModel;
         }
 
@@ -62,7 +66,7 @@ namespace Harmonia.Views
                 return;
             }
 
-            var isMp3GainPathValid = _settingsProvider.IsMp3GainPathValid();
+            var isMp3GainPathValid = _storageWrapper.FileExists(_userSettings.Mp3GainPath);
             if (!isMp3GainPathValid)
             {
                 var result = await this.ShowMessageAsync(
@@ -112,7 +116,7 @@ namespace Harmonia.Views
             }
             else
             {
-                Process.Start("explorer.exe", _settingsProvider.OutputDirectory);
+                Process.Start("explorer.exe", _userSettings.OutputDirectory);
             }
         }
 
@@ -120,14 +124,14 @@ namespace Harmonia.Views
         {
             await this.ShowMessageAsync(
                 title: MainResources.OutputPathDoesNotExist_Title,
-                message: string.Format(MainResources.OutputPathDoesNotExist_Message, _settingsProvider.OutputDirectory),
+                message: string.Format(MainResources.OutputPathDoesNotExist_Message, _userSettings.OutputDirectory),
                 style: MessageDialogStyle.Affirmative
                 );
 
             ShowDialogWindow<SettingsWindow>();
         }
 
-        private bool IsOutputDirectoryValid() => _settingsProvider.IsOutputDirectoryValid();
+        private bool IsOutputDirectoryValid() => _storageWrapper.DirectoryExists(_userSettings.OutputDirectory);
 
         private void btnOpenSettings_Click(object sender, RoutedEventArgs e)
             => ShowDialogWindow<SettingsWindow>();

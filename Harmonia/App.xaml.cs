@@ -14,12 +14,12 @@ namespace Harmonia
 
             var container = Bootstrapper.Register(new UnityContainer().AddExtension(new Diagnostic()));
 
-            var settingsProvider = container.Resolve<ISettingsProvider>();
-            settingsProvider.UpgradeIfRequired();
+            var settingsManager = container.Resolve<ISettingsManager>();
+            var settings = settingsManager.LoadSettings();
 
             var themeManagerWrapper = container.Resolve<IThemeManagerWrapper>();
-            themeManagerWrapper.ChangeThemeBaseColor(settingsProvider.ThemeBaseColor);
-            themeManagerWrapper.ChangeThemeColorScheme(settingsProvider.ThemeColorScheme);
+            themeManagerWrapper.ChangeThemeBaseColor(settings.ThemeBaseColor);
+            themeManagerWrapper.ChangeThemeColorScheme(settings.ThemeColorScheme);
 
             Current.MainWindow = container.Resolve<MainWindow>();
             Current.MainWindow.Show();

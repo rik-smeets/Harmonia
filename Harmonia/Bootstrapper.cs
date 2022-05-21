@@ -37,10 +37,9 @@ namespace Harmonia
             .RegisterType<IAudioNormalizerService, AudioNormalizerService>()
             .RegisterType<IAutoUpdateService, AutoUpdateService>();
 
-        private static void RegisterSettings(IUnityContainer container)
+        private static void RegisterSettings(IUnityContainer container) 
             => container
-            .RegisterType<ISettingsProvider, SettingsProvider>()
-            .RegisterType<ISettingsRetriever, SettingsRetriever>();
+                .RegisterSingleton<ISettingsManager, SettingsManager>();
 
         private static void RegisterWrappers(IUnityContainer container)
             => container
