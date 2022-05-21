@@ -37,7 +37,7 @@
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="Fody" Version="6.6.0">
+        <PackageReference Include="Fody" Version="6.6.2">
             <PrivateAssets>all</PrivateAssets>
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
@@ -48,9 +48,9 @@
         <PackageReference Include="System.Configuration.ConfigurationManager" Version="6.0.0" />
         <PackageReference Include="TagLibSharp" Version="2.2.0" />
         <PackageReference Include="Unity" Version="5.11.10" />
-        <PackageReference Include="Xabe.FFmpeg" Version="5.1.0" />
-        <PackageReference Include="Xabe.FFmpeg.Downloader" Version="5.1.0" />
-        <PackageReference Include="YoutubeExplode" Version="6.1.0" />
+        <PackageReference Include="Xabe.FFmpeg" Version="5.2.0" />
+        <PackageReference Include="Xabe.FFmpeg.Downloader" Version="5.2.0" />
+        <PackageReference Include="YoutubeExplode" Version="6.1.2" />
     </ItemGroup>
 
     <ItemGroup>
