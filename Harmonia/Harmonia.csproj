@@ -3,7 +3,7 @@
     <PropertyGroup>
         <AssemblyName>Harmonia</AssemblyName>
         <RootNamespace>Harmonia</RootNamespace>
-        <Version>2.2.1</Version>
+        <Version>3.0.0</Version>
     </PropertyGroup>
 
     <PropertyGroup>
@@ -12,7 +12,7 @@
     
     <PropertyGroup>
         <OutputType>WinExe</OutputType>
-        <TargetFramework>net6.0-windows</TargetFramework>
+        <TargetFramework>net8.0-windows</TargetFramework>
         <RuntimeIdentifier>win-x64</RuntimeIdentifier>
     </PropertyGroup>
 
