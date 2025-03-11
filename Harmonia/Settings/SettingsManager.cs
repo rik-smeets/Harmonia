@@ -1,6 +1,6 @@
 ﻿using System.IO;
+using System.Text.Json;
 using Harmonia.Settings.Interfaces;
-using Newtonsoft.Json;
 
 namespace Harmonia.Settings
 {
@@ -18,12 +18,12 @@ namespace Harmonia.Settings
         }
 
         public UserSettings LoadSettings() =>
-            File.Exists(_appSettingsPath) ?
-            JsonConvert.DeserializeObject<UserSettings>(File.ReadAllText(_appSettingsPath)) :
-            _emptyUserSettings.Value;
+            File.Exists(_appSettingsPath) 
+            ? JsonSerializer.Deserialize<UserSettings>(File.ReadAllText(_appSettingsPath)) 
+            : _emptyUserSettings.Value;
 
         public void SaveSettings(UserSettings settings) => 
-            File.WriteAllText(_appSettingsPath, JsonConvert.SerializeObject(settings));
+            File.WriteAllText(_appSettingsPath, JsonSerializer.Serialize(settings));
 
         private static string GetSettingsDirectory()
         {

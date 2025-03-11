@@ -3,7 +3,7 @@
     <PropertyGroup>
         <AssemblyName>Harmonia</AssemblyName>
         <RootNamespace>Harmonia</RootNamespace>
-        <Version>3.0.3</Version>
+        <Version>3.0.4</Version>
     </PropertyGroup>
 
     <PropertyGroup>
@@ -37,7 +37,7 @@
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="Fody" Version="6.9.1">
+        <PackageReference Include="Fody" Version="6.9.2">
             <PrivateAssets>all</PrivateAssets>
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
@@ -48,9 +48,9 @@
         <PackageReference Include="System.Configuration.ConfigurationManager" Version="8.0.1" />
         <PackageReference Include="TagLibSharp" Version="2.3.0" />
         <PackageReference Include="Unity" Version="5.11.10" />
-        <PackageReference Include="Xabe.FFmpeg" Version="5.2.6" />
-        <PackageReference Include="Xabe.FFmpeg.Downloader" Version="5.2.6" />
-        <PackageReference Include="YoutubeExplode" Version="6.5.1" />
+        <PackageReference Include="Xabe.FFmpeg" Version="6.0.1" />
+        <PackageReference Include="Xabe.FFmpeg.Downloader" Version="6.0.1" />
+        <PackageReference Include="YoutubeExplode" Version="6.5.3" />
     </ItemGroup>
 
     <ItemGroup>
