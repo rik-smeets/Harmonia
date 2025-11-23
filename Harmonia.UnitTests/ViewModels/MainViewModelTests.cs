@@ -54,7 +54,7 @@ namespace Harmonia.UnitTests.ViewModels
             _mockRepository.VerifyNoOtherCalls();
         }
 
-        [DataTestMethod]
+        [TestMethod]
         [DataRow("https://www.google.com",
             DisplayName = "Random other website")]
         [DataRow("https://www.youtube.com",
@@ -74,7 +74,7 @@ namespace Harmonia.UnitTests.ViewModels
             _mainViewModel.DownloadItems.ShouldBeEmpty();
         }
 
-        [DataTestMethod]
+        [TestMethod]
         [DataRow("https://www.youtube.com/watch?v=" + ValidVideoId,
             DisplayName = "Full YouTube URL with video ID in query string with HTTPS")]
         [DataRow("www.youtube.com/watch?v=" + ValidVideoId,
@@ -104,7 +104,7 @@ namespace Harmonia.UnitTests.ViewModels
             _mainViewModel.DownloadItems.ShouldHaveSingleItem();
         }
 
-        [DataTestMethod]
+        [TestMethod]
         [DataRow("Rick Astley - Never Gonna Give You Up", "Rick Astley", "Never Gonna Give You Up",
             DisplayName = "Artist - Title")]
         [DataRow(" Rick Astley - Never Gonna Give You Up ", "Rick Astley", "Never Gonna Give You Up",
@@ -257,7 +257,7 @@ namespace Harmonia.UnitTests.ViewModels
             await _mainViewModel.PerformUpdateAsync();
         }
 
-        [DataTestMethod]
+        [TestMethod]
         [DataRow(MessageDialogResult.Canceled)]
         [DataRow(MessageDialogResult.FirstAuxiliary)]
         [DataRow(MessageDialogResult.Negative)]

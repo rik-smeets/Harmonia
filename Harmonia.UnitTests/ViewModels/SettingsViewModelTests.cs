@@ -132,7 +132,7 @@ namespace Harmonia.UnitTests.ViewModels
             await _settingsViewModel.ShowMp3GainHelp();
         }
 
-        [DataTestMethod]
+        [TestMethod]
         [DataRow(MessageDialogResult.Canceled)]
         [DataRow(MessageDialogResult.Negative)]
         [DataRow(MessageDialogResult.FirstAuxiliary)]
@@ -180,7 +180,7 @@ namespace Harmonia.UnitTests.ViewModels
             _userSettings.ThemeBaseColor.ShouldBe(expectedThemeBaseColor);
         }
 
-        [DataTestMethod]
+        [TestMethod]
         [DataRow("Dark", true)]
         [DataRow("Light", false)]
         public void IsDarkThemeEnabled_WhenCalled_ThenReturnsBoolBasedOnSettingsProviderResult(
@@ -193,7 +193,7 @@ namespace Harmonia.UnitTests.ViewModels
             result.ShouldBe(expectedResult);
         }
 
-        [DataTestMethod]
+        [TestMethod]
         [DataRow("Dark", false)]
         [DataRow("Light", true)]
         public void IsLightThemeEnabled_WhenCalled_ThenReturnsBoolBasedOnSettingsProviderResult(

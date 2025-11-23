@@ -3,7 +3,7 @@
     <PropertyGroup>
         <AssemblyName>Harmonia</AssemblyName>
         <RootNamespace>Harmonia</RootNamespace>
-        <Version>3.0.5</Version>
+        <Version>4.0.0</Version>
     </PropertyGroup>
 
     <PropertyGroup>
@@ -12,7 +12,7 @@
     
     <PropertyGroup>
         <OutputType>WinExe</OutputType>
-        <TargetFramework>net8.0-windows</TargetFramework>
+        <TargetFramework>net10.0-windows</TargetFramework>
         <RuntimeIdentifier>win-x64</RuntimeIdentifier>
     </PropertyGroup>
 
@@ -43,9 +43,10 @@
         </PackageReference>
         <PackageReference Include="MahApps.Metro" Version="2.4.11" />
         <PackageReference Include="Onova" Version="2.6.13" />
-        <PackageReference Include="PropertyChanged.Fody" Version="4.1.0" />
+        <PackageReference Include="PropertyChanged.Fody" Version="4.1.0">
+            <PrivateAssets>all</PrivateAssets>
+        </PackageReference>
         <PackageReference Include="SharpClipboard" Version="3.5.2" />
-        <PackageReference Include="System.Configuration.ConfigurationManager" Version="9.0.10" />
         <PackageReference Include="TagLibSharp" Version="2.3.0" />
         <PackageReference Include="Unity" Version="5.11.10" />
         <PackageReference Include="Xabe.FFmpeg" Version="6.0.2" />
