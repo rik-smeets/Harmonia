@@ -3,7 +3,6 @@ using Harmonia.Services;
 using Harmonia.Settings;
 using Harmonia.Settings.Interfaces;
 using Harmonia.Wrappers.Interfaces;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using Shouldly;
 

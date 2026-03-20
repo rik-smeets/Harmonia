@@ -21,8 +21,8 @@ namespace Harmonia.Services
             using (TagLib.File file = TagLib.File.Create(mp3Path))
             {
                 file.Tag.Title = title;
-                file.Tag.Performers = new[] { artist };
-                file.Tag.AlbumArtists = new[] { artist };
+                file.Tag.Performers = [artist];
+                file.Tag.AlbumArtists = [artist];
                 file.Save();
             }
         }

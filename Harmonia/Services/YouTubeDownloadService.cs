@@ -9,18 +9,12 @@ using YoutubeExplode.Videos.Streams;
 
 namespace Harmonia.Services
 {
-    public class YouTubeDownloadService : IYouTubeDownloadService
+    public class YouTubeDownloadService(ISettingsManager settingsManager) : IYouTubeDownloadService
     {
-        private readonly YoutubeClient _youTubeClient = new();
-        private readonly UserSettings _userSettings;
+        private readonly YoutubeClient _youTubeClient = new YoutubeClient();
+        private readonly UserSettings _userSettings = settingsManager.LoadSettings();
         private static readonly Regex IllegalFileNameRegex =
             new($"[{Regex.Escape(new string(Path.GetInvalidFileNameChars()) + new string(Path.GetInvalidPathChars()))}]");
-
-        public YouTubeDownloadService(ISettingsManager settingsManager)
-        {
-            _youTubeClient = new YoutubeClient();
-            _userSettings = settingsManager.LoadSettings();
-        }
 
         public async Task<Video> GetVideo(string youTubeId) =>
             await _youTubeClient.Videos.GetAsync(youTubeId);

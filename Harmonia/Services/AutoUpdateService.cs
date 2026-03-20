@@ -4,14 +4,9 @@ using Onova;
 
 namespace Harmonia.Services
 {
-    public class AutoUpdateService : IAutoUpdateService
+    public class AutoUpdateService(IUpdateManager updateManager) : IAutoUpdateService
     {
-        private readonly IUpdateManager _updateManager;
-
-        public AutoUpdateService(IUpdateManager updateManager)
-        {
-            _updateManager = updateManager;
-        }
+        private readonly IUpdateManager _updateManager = updateManager;
 
         public async Task<bool> CanPerformUpdateAsync()
             => (await _updateManager.CheckForUpdatesAsync()).CanUpdate;

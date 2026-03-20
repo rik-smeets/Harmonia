@@ -1,5 +1,4 @@
-﻿using System.Diagnostics;
-using System.Reflection;
+﻿using System.Reflection;
 using Harmonia.Services;
 using Harmonia.Services.Interfaces;
 using Harmonia.Settings;
@@ -58,7 +57,7 @@ namespace Harmonia
         private static UpdateManager CreateUpdateManager()
         {
             var entryAssembly = Assembly.GetEntryAssembly();
-            var executablePath = Process.GetCurrentProcess().MainModule.FileName;
+            var executablePath = Environment.ProcessPath;
             var assemblyMetaData = AssemblyMetadata.FromAssembly(entryAssembly, executablePath);
 
             return new UpdateManager(

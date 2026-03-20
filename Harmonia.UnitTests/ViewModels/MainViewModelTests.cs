@@ -4,7 +4,6 @@ using Harmonia.Properties;
 using Harmonia.Services.Interfaces;
 using Harmonia.ViewModels;
 using MahApps.Metro.Controls.Dialogs;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using Shouldly;
 using YoutubeExplode.Exceptions;

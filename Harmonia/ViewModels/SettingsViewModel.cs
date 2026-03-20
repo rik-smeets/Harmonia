@@ -13,12 +13,12 @@ namespace Harmonia.ViewModels
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public static IReadOnlyCollection<string> ThemeColorSchemes { get; } = new[]
+        public static IReadOnlyCollection<string> ThemeColorSchemes { get; } = [.. new[]
         {
             Red, Green, Blue, Purple, Orange, Lime, Emerald, Teal,
             Cyan, Cobalt, Indigo, Violet, Pink, Magenta, Crimson, Amber,
             Yellow, Brown, Olive, Steel, Mauve, Taupe, Sienna
-        }.OrderBy(c => c).ToArray();
+        }.OrderBy(c => c)];
 
         private readonly ISettingsManager _settingsManager;
         private readonly UserSettings _userSettings;

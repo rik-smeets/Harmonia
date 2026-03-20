@@ -4,7 +4,6 @@ using Harmonia.Settings.Interfaces;
 using Harmonia.ViewModels;
 using Harmonia.Wrappers.Interfaces;
 using MahApps.Metro.Controls.Dialogs;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using Shouldly;
 

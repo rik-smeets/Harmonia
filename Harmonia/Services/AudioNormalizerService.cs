@@ -7,21 +7,14 @@ using Harmonia.Wrappers.Interfaces;
 
 namespace Harmonia.Services
 {
-    public class AudioNormalizerService : IAudioNormalizerService
+    public class AudioNormalizerService(
+        ISettingsManager settingsManager,
+        IProcessWrapper processWrapper,
+        IStorageWrapper storageWrapper) : IAudioNormalizerService
     {
-        private readonly UserSettings _userSettings;
-        private readonly IProcessWrapper _processWrapper;
-        private readonly IStorageWrapper _storageWrapper;
-
-        public AudioNormalizerService(
-            ISettingsManager settingsManager,
-            IProcessWrapper processWrapper,
-            IStorageWrapper storageWrapper)
-        {
-            _userSettings = settingsManager.LoadSettings();
-            _processWrapper = processWrapper;
-            _storageWrapper = storageWrapper;
-        }
+        private readonly UserSettings _userSettings = settingsManager.LoadSettings();
+        private readonly IProcessWrapper _processWrapper = processWrapper;
+        private readonly IStorageWrapper _storageWrapper = storageWrapper;
 
         public void NormalizeAudio(string mp3Path)
         {

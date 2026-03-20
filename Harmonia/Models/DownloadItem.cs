@@ -4,14 +4,9 @@ using PropertyChanged;
 
 namespace Harmonia.Models
 {
-    public class DownloadItem : INotifyPropertyChanged
+    public class DownloadItem(string youTubeId) : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
-
-        public DownloadItem(string youTubeId)
-        {
-            YouTubeId = youTubeId;
-        }
 
         public string Status { get; set; } = MainResources.New;
         public string Artist { get; set; }
@@ -25,7 +20,7 @@ namespace Harmonia.Models
         [DependsOn(nameof(IsCompleted), nameof(IsRunning))]
         public bool IsRunningOrCompleted => IsRunning || IsCompleted;
 
-        public string YouTubeId { get; }
+        public string YouTubeId { get; } = youTubeId;
 
         public void SetFailed()
         {

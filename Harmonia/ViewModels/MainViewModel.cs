@@ -8,10 +8,10 @@ using MahApps.Metro.Controls.Dialogs;
 
 namespace Harmonia.ViewModels
 {
-    public class MainViewModel
+    public partial class MainViewModel
     {
-        private readonly ObservableCollection<DownloadItem> _downloadItems = new();
-        private readonly Regex YouTubeUrlRegex = new(@"youtu(?:\.be|be\.com)/(?:.*v(?:/|=)|(?:.*/)?)([a-zA-Z0-9-_]{11})+");
+        private readonly ObservableCollection<DownloadItem> _downloadItems = [];
+        private readonly Regex YouTubeUrlRegex = YouTubeRegex();
         private readonly IYouTubeDownloadService _youTubeDownloadService;
         private readonly IDialogCoordinator _dialogCoordinator;
         private readonly IConversionService _conversionService;
@@ -64,7 +64,7 @@ namespace Harmonia.ViewModels
             {
                 var videoInfo = await _youTubeDownloadService.GetVideo(youTubeId);
 
-                var suggestions = videoInfo.Title.Split(new[] { "-" }, 2, StringSplitOptions.RemoveEmptyEntries);
+                var suggestions = videoInfo.Title.Split(["-"], 2, StringSplitOptions.RemoveEmptyEntries);
                 var artistSuggestion = suggestions[0].Trim();
                 var titleSuggestion = suggestions.Length > 1 ? suggestions[1].Trim() : artistSuggestion;
 
@@ -84,7 +84,7 @@ namespace Harmonia.ViewModels
             var newDownloads = DownloadItems
                 .Where(downloadItem => !downloadItem.IsRunningOrCompleted)
                 .ToArray();
-            if (!newDownloads.Any())
+            if (newDownloads.Length == 0)
             {
                 InvokeDownloadProgressEvent(TaskbarItemProgressState.Normal);
 
@@ -220,5 +220,8 @@ namespace Harmonia.ViewModels
                 FinishedItems = finishedItems,
             });
         }
+
+        [GeneratedRegex(@"youtu(?:\.be|be\.com)/(?:.*v(?:/|=)|(?:.*/)?)([a-zA-Z0-9-_]{11})+")]
+        private static partial Regex YouTubeRegex();
     }
 }
